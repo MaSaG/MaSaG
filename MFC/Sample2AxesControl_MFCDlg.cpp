@@ -417,6 +417,8 @@ void CSample2AxesControl_MFCDlg::OnBnClickedButtonStart()
 	// RtOpenSharedMemory
 	ret = NEC_LoadRtxApp("D:\\Massage\\Massage_MFC_20170105\\Sample_2Layer\\VS2015\\Sample2AxesControl_MFC\\RtssDebug\\MaSaG_RTX.rtss");
 	if (ret != 0) { MessageBox("NEC_LoadRtxApp RTX_app failed!"); NEC_StopDriver(); return; }
+
+	RtPrintf("mark\n");
 	
 	sHServo_on = RtOpenSharedMemory( SHM_MAP_ALL_ACCESS , 0 , SHM_NAME , &location );
 	// Shared Memory Pointer Assignment
@@ -578,7 +580,7 @@ void CSample2AxesControl_MFCDlg::OnTimer(UINT_PTR nIDEvent)
 		t.Format(_T("%f"), p->_rtxRArm.curPos[5]);		mActPosR5.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxRArm.curPos[6]);		mActPosR6.SetWindowText(t);
 		
-		// Target Position, L0 and R0 Motors
+		// Target Position
 		t.Format(_T("%f"), p->_rtxLArm.tarPos[0]);		mTgtPosL0.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxLArm.tarPos[1]);		mTgtPosL1.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxLArm.tarPos[2]);		mTgtPosL2.SetWindowText(t);
@@ -594,7 +596,7 @@ void CSample2AxesControl_MFCDlg::OnTimer(UINT_PTR nIDEvent)
 		t.Format(_T("%f"), p->_rtxRArm.tarPos[5]);		mTgtPosR5.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxRArm.tarPos[6]);		mTgtPosR6.SetWindowText(t);
 
-		// Error Position, L0 and R0 Motors
+		// Error Position
 		t.Format(_T("%f"), p->_rtxLArm.errPos[0]);		mErrPosL0.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxLArm.errPos[1]);		mErrPosL1.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxLArm.errPos[2]);		mErrPosL2.SetWindowText(t);
@@ -610,6 +612,22 @@ void CSample2AxesControl_MFCDlg::OnTimer(UINT_PTR nIDEvent)
 		t.Format(_T("%f"), p->_rtxRArm.errPos[5]);		mErrPosR5.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxRArm.errPos[6]);		mErrPosR6.SetWindowText(t);
 
+		// Planned Position of Joint
+		t.Format(_T("%f"), p->_rtxLArm.plnPos[0]);		mPlnPosL0.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.plnPos[1]);		mPlnPosL1.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.plnPos[2]);		mPlnPosL2.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.plnPos[3]);		mPlnPosL3.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.plnPos[4]);		mPlnPosL4.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.plnPos[5]);		mPlnPosL5.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.plnPos[6]);		mPlnPosL6.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.plnPos[0]);		mPlnPosR0.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.plnPos[1]);		mPlnPosR1.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.plnPos[2]);		mPlnPosR2.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.plnPos[3]);		mPlnPosR3.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.plnPos[4]);		mPlnPosR4.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.plnPos[5]);		mPlnPosR5.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.plnPos[6]);		mPlnPosR6.SetWindowText(t);
+		
 		// Actual Velocity of Joint
 		t.Format(_T("%f"), p->_rtxLArm.curVel[0]);		mActVelL0.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxLArm.curVel[1]);		mActVelL1.SetWindowText(t);
@@ -647,12 +665,12 @@ void CSample2AxesControl_MFCDlg::OnTimer(UINT_PTR nIDEvent)
 		t.Format(_T("%f"), p->_rtxLArm.curTCP[3]);		mCurTCPLa.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxLArm.curTCP[4]);		mCurTCPLb.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxLArm.curTCP[5]);		mCurTCPLc.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.curTCP[0]);		mCurTCPLx.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.curTCP[1]);		mCurTCPLy.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.curTCP[2]);		mCurTCPLz.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.curTCP[3]);		mCurTCPLa.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.curTCP[4]);		mCurTCPLb.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.curTCP[5]);		mCurTCPLc.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.curTCP[0]);		mCurTCPRx.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.curTCP[1]);		mCurTCPRy.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.curTCP[2]);		mCurTCPRz.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.curTCP[3]);		mCurTCPRa.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.curTCP[4]);		mCurTCPRb.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.curTCP[5]);		mCurTCPRc.SetWindowText(t);
 
 		// target TCP
 		t.Format(_T("%f"), p->_rtxLArm.tarTCP[0]);		mTarTCPLx.SetWindowText(t);
@@ -661,12 +679,12 @@ void CSample2AxesControl_MFCDlg::OnTimer(UINT_PTR nIDEvent)
 		t.Format(_T("%f"), p->_rtxLArm.tarTCP[3]);		mTarTCPLa.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxLArm.tarTCP[4]);		mTarTCPLb.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxLArm.tarTCP[5]);		mTarTCPLc.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.tarTCP[0]);		mTarTCPLx.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.tarTCP[1]);		mTarTCPLy.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.tarTCP[2]);		mTarTCPLz.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.tarTCP[3]);		mTarTCPLa.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.tarTCP[4]);		mTarTCPLb.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.tarTCP[5]);		mTarTCPLc.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTCP[0]);		mTarTCPRx.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTCP[1]);		mTarTCPRy.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTCP[2]);		mTarTCPRz.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTCP[3]);		mTarTCPRa.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTCP[4]);		mTarTCPRb.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTCP[5]);		mTarTCPRc.SetWindowText(t);
 
 		// error TCP
 		t.Format(_T("%f"), p->_rtxLArm.errTCP[0]);		mErrTCPLx.SetWindowText(t);
@@ -675,12 +693,12 @@ void CSample2AxesControl_MFCDlg::OnTimer(UINT_PTR nIDEvent)
 		t.Format(_T("%f"), p->_rtxLArm.errTCP[3]);		mErrTCPLa.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxLArm.errTCP[4]);		mErrTCPLb.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxLArm.errTCP[5]);		mErrTCPLc.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.errTCP[0]);		mErrTCPLx.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.errTCP[1]);		mErrTCPLy.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.errTCP[2]);		mErrTCPLz.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.errTCP[3]);		mErrTCPLa.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.errTCP[4]);		mErrTCPLb.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.errTCP[5]);		mErrTCPLc.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.errTCP[0]);		mErrTCPRx.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.errTCP[1]);		mErrTCPRy.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.errTCP[2]);		mErrTCPRz.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.errTCP[3]);		mErrTCPRa.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.errTCP[4]);		mErrTCPRb.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.errTCP[5]);		mErrTCPRc.SetWindowText(t);
 
 		// planned TCP
 		t.Format(_T("%f"), p->_rtxLArm.plnTCP[0]);		mPlnTCPLx.SetWindowText(t);
@@ -689,12 +707,12 @@ void CSample2AxesControl_MFCDlg::OnTimer(UINT_PTR nIDEvent)
 		t.Format(_T("%f"), p->_rtxLArm.plnTCP[3]);		mPlnTCPLa.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxLArm.plnTCP[4]);		mPlnTCPLb.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxLArm.plnTCP[5]);		mPlnTCPLc.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.plnTCP[0]);		mPlnTCPLx.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.plnTCP[1]);		mPlnTCPLy.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.plnTCP[2]);		mPlnTCPLz.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.plnTCP[3]);		mPlnTCPLa.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.plnTCP[4]);		mPlnTCPLb.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.plnTCP[5]);		mPlnTCPLc.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.plnTCP[0]);		mPlnTCPRx.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.plnTCP[1]);		mPlnTCPRy.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.plnTCP[2]);		mPlnTCPRz.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.plnTCP[3]);		mPlnTCPRa.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.plnTCP[4]);		mPlnTCPRb.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.plnTCP[5]);		mPlnTCPRc.SetWindowText(t);
 
 		// TCP velocity
 		t.Format(_T("%f"), p->_rtxLArm.velTCP[0]);		mVelTCPLx.SetWindowText(t);
@@ -703,12 +721,12 @@ void CSample2AxesControl_MFCDlg::OnTimer(UINT_PTR nIDEvent)
 		t.Format(_T("%f"), p->_rtxLArm.velTCP[3]);		mVelTCPLa.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxLArm.velTCP[4]);		mVelTCPLb.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxLArm.velTCP[5]);		mVelTCPLc.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.velTCP[0]);		mVelTCPLx.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.velTCP[1]);		mVelTCPLy.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.velTCP[2]);		mVelTCPLz.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.velTCP[3]);		mVelTCPLa.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.velTCP[4]);		mVelTCPLb.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.velTCP[5]);		mVelTCPLc.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.velTCP[0]);		mVelTCPRx.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.velTCP[1]);		mVelTCPRy.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.velTCP[2]);		mVelTCPRz.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.velTCP[3]);		mVelTCPRa.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.velTCP[4]);		mVelTCPRb.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.velTCP[5]);		mVelTCPRc.SetWindowText(t);
 
 	}
 	CDialogEx::OnTimer(nIDEvent);
