@@ -127,16 +127,19 @@ int execProgram(int& cmd)
 
 	case TEST15_CMD:
 		RtPrintf("test15 command\n");
+		robot->RArm->mtn->MOV_JOINT(robot->RArm, 10.0, 4, 5.0);
 		cmd = READY_CMD;
 		break;
 
 	case TEST16_CMD:
 		RtPrintf("test16 command\n");
+		robot->RArm->mtn->MOV_JOINT(robot->RArm, 0.0, 4, 5.0);
 		cmd = READY_CMD;
 		break;
 
 	case TEST17_CMD:
 		RtPrintf("test17 command\n");
+		robot->RArm->mtn->MOV_JOINT(robot->RArm, 5.0, 4, 5.0);
 		cmd = READY_CMD;
 		break;
 		

@@ -2,6 +2,7 @@
 #define _MANIPULATOR_H
 
 #include "SystemParams.h"
+#include "MotorData.h"
 #include "Joint.h"
 #include "kinematics.h"
 #include "dynamics.h"
@@ -13,7 +14,7 @@ class Manipulator
 public:
 	EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-	Joint*			joint[ARM_DOF];
+		Joint*			joint[ARM_DOF];
 	kinematics		kin;
 	dynamics		dyn;
 	Control			ctrl;
@@ -57,7 +58,7 @@ public:
 
 	// Roation matrix in Object Coordinate
 	Eigen::Matrix3f objR;
-	
+
 	// Joint and Cartesian Motion
 	int	 planner_mode;	 // motion planner mode
 	int	 control_mode;   // control mode
@@ -73,11 +74,9 @@ public:
 
 	Manipulator(RTX_ARM_DATA* _rtxArm);
 	~Manipulator();
-
 	
 private:
-
-
+	
 };
 
 

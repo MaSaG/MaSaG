@@ -7,14 +7,15 @@
 class Joint
 {
 public:
-	Joint(void* mAxis, float gear, int encoder, int driver_type);
+	Joint(void* mAxis, float gear, int encoder, float rated_torque, int driver_type);
 	void updateJoint();
 	~Joint();
 
 	float		_angle;
 	absDriver*	driver;
-private:
 	float		_gearRatio;
+
+private:
 
 };
 

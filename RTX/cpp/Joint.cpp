@@ -5,7 +5,7 @@
 #include "mcDSA-E65.h"
 #include "MCDC3006_CF.h"
 
-Joint::Joint(void* mAxis, float gear, int encoder, int driver_type)
+Joint::Joint(void* mAxis, float gear, int encoder, float rated_torque, int driver_type)
 {
 	switch (driver_type)
 	{
@@ -28,12 +28,13 @@ Joint::Joint(void* mAxis, float gear, int encoder, int driver_type)
 	_gearRatio= gear;
 	driver->_nodeID = mAxis;
 	driver->_resEncoder = encoder;
+	driver->_ratedTorque = rated_torque;
 }
 
 void Joint::updateJoint()
 {
 	driver->readEncoder();
-	_angle = (float)driver->_countEncoder / _gearRatio / driver->_resEncoder;
+	_angle = (float)driver->_countEncoder / _gearRatio / driver->_resEncoder * 2*M_PI;
 }
 
 Joint::~Joint()

@@ -1,7 +1,9 @@
 #pragma once
 
-struct MotorDATA {       // 皑笷ぇ膀セ把计  场だ常琌joint space穦ノΤnominal torque穦璸衡output_torque_factorノ┮临琌玂痙硂柑
-	float nominal_torque;// nominal torque (max. continuous torque)
+#define mPI 3.14159
+
+struct MotorDATA {      // 皑笷ぇ膀セ把计  场だ常琌joint space穦ノΤnominal torque穦璸衡output_torque_factorノ┮临琌玂痙硂柑
+	float rated_torque; // nominal torque (max. continuous torque)
 	float R;			// terminal resistor [Ohm]
 	float Km;			// torque constant [Nm/A]
 	float Kb;			// back EMF coefficient [V/(rad/s)]
@@ -11,11 +13,11 @@ struct MotorDATA {       // 皑笷ぇ膀セ把计  场だ常琌joint space穦ノΤnom
 
 const MotorDATA mDATA[7] =   //聋皑笷ぇ膀セ把计(nominal torque,R,Km,Kb,Im,Cm)
 {
-	{ 0.177,  0.299, 0.0302, 60 / (317 * M_PI), 0.142,  0.0258131 },
-	{ 0.405,  0.103, 0.0385, 60 / (248 * M_PI), 0.536,  0.1251700969 },
-	{ 0.177,  0.299, 0.0302, 60 / (317 * M_PI), 0.142,  0.0258131 },
-	{ 0.177,  0.299, 0.0302, 60 / (317 * M_PI), 0.142,  0.0258131 },
-	{ 0.177,  0.299, 0.0302, 60 / (317 * M_PI), 0.142,  0.0258131 },
-	{ 0.0304,  1.53, 0.0208, 60 / (460 * M_PI), 0.0147, 0.0258131 },
-	{ 0.0304,  1.53, 0.0208, 60 / (460 * M_PI), 0.0147, 0.0258131 }
+	{ 0.177,  0.299, 0.0302, 60 / (317 * mPI), 0.142,  0.0258131 },
+	{ 0.405,  0.103, 0.0385, 60 / (248 * mPI), 0.536,  0.1251700969 },
+	{ 0.177,  0.299, 0.0302, 60 / (317 * mPI), 0.142,  0.0258131 },
+	{ 0.177,  0.299, 0.0302, 60 / (317 * mPI), 0.142,  0.0258131 },
+	{ 0.177,  0.299, 0.0302, 60 / (317 * mPI), 0.142,  0.0258131 },
+	{ 0.0304,  1.53, 0.0208, 60 / (460 * mPI), 0.0147, 0.0258131 },
+	{ 0.0304,  1.53, 0.0208, 60 / (460 * mPI), 0.0147, 0.0258131 }
 };

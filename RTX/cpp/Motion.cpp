@@ -9,6 +9,8 @@
 #define CNT_NUM_JOINT 50
 #define EPSILON_JOINT_VEL 0.1
 
+#define DEG2RAD (M_PI/180)
+
 Motion::Motion()
 {
 	initParams();
@@ -90,7 +92,7 @@ void Motion::MOV_JOINT(Manipulator* arm, float q, int n, float t)
 {
 	// q: angle, n: n-th joint, t: moving time
 	arm->tarJoint = arm->curJoint;
-	arm->tarJoint(n) = q;
+	arm->tarJoint(n) = q * DEG2RAD;
 	
 	// cubic parameters  calculation
 	jointCubic(arm, arm->tarJoint, t);
@@ -112,7 +114,7 @@ void Motion::MOV_JOINT(Manipulator* arm, float q, int n, float t)
 void Motion::MOV_JOINT(Manipulator* arm, Vectornf vec_q, float t)
 {
 	// vec_q: target angle, t: moving time
-	arm->tarJoint = vec_q;
+	arm->tarJoint = vec_q * DEG2RAD;
 
 	// cubic parameters calculation
 	jointCubic(arm, arm->tarJoint, t);
@@ -134,7 +136,7 @@ void Motion::MOV_JOINT(Manipulator* arm, Vectornf vec_q, float t)
 void Motion::MOV_JOINT(Manipulator* arm, float q, int n)
 {
 	arm->tarJoint = arm->curJoint;
-	arm->tarJoint(n) = q;
+	arm->tarJoint(n) = q * DEG2RAD;
 
 	arm->planner_mode = OTG_Joint_Timer;
 	arm->control_mode = Joint_Mode;
@@ -156,7 +158,7 @@ void Motion::MOV_JOINT(Manipulator* arm, float q, int n)
 void Motion::MOV_JOINT(Manipulator* arm, Vectornf vec_q)
 {
 	// target joint position: vec_q
-	arm->tarJoint = vec_q;
+	arm->tarJoint = vec_q * DEG2RAD;
 
 	arm->planner_mode = OTG_Joint_Timer;
 	arm->control_mode = Joint_Mode;
@@ -178,7 +180,7 @@ void Motion::MOV_JOINT(Manipulator* arm, Vectornf vec_q)
 void Motion::MOV_JOINT_RAPID(Manipulator* arm, float q, int n)
 {
 	arm->tarJoint = arm->curJoint;
-	arm->tarJoint(n) = q;
+	arm->tarJoint(n) = q * DEG2RAD;
 	arm->plnJoint = arm->tarJoint;
 
 	arm->planner_mode = Planner_Idle;
@@ -200,7 +202,7 @@ void Motion::MOV_JOINT_RAPID(Manipulator* arm, float q, int n)
 
 void Motion::MOV_JOINT_RAPID(Manipulator* arm, Vectornf vec_q)
 {
-	arm->tarJoint = vec_q;
+	arm->tarJoint = vec_q * DEG2RAD;
 	arm->plnJoint = arm->tarJoint;
 
 	arm->planner_mode = Planner_Idle;

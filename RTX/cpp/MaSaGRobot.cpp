@@ -1,10 +1,20 @@
 #include "MaSaGRobot.h"
 
+#define RAD2DEG  (180/M_PI)
+
 MaSaGRobot::MaSaGRobot()
 {
 	LArm = new Manipulator(&_RTX.pData->_rtxLArm);
-	RArm->joint[0]->driver->_resEncoder = 4096;				// special defined since we use RE40 motors with different specifications
 	RArm = new Manipulator(&_RTX.pData->_rtxRArm);
+	RArm->joint[0]->driver->_resEncoder = 4096;				// special defined since we use RE40 motors with different specifications
+
+	int i;
+	float limit_ratio = 0.2;
+	for (i = 0; i < ARM_DOF; i++)
+	{
+		LArm->joint[i]->driver->_ratedTorque *= limit_ratio;
+		RArm->joint[i]->driver->_ratedTorque *= limit_ratio;
+	}
 }
 
 int MaSaGRobot::initRobot()
@@ -24,6 +34,11 @@ void MaSaGRobot::updateFeedback()
 {
 	LArm->encoderFB();
 	RArm->encoderFB();
+
+	LArm->curJoint[3] *= -1;
+	LArm->curJoint[4] *= -1;
+	RArm->curJoint[2] *= -1;
+	RArm->curJoint[3] *= -1;
 }
 
 void MaSaGRobot::updateState()
@@ -39,20 +54,20 @@ void MaSaGRobot::updateSharedMemory()
 	// joint data 
 	for (i = 0; i < ARM_DOF - 2; i++)
 	{
-		_RTX.pData->_rtxLArm.curPos[i] = LArm->curJoint(i);             
-		_RTX.pData->_rtxRArm.curPos[i] = RArm->curJoint(i);
-		_RTX.pData->_rtxLArm.tarPos[i] = LArm->tarJoint(i);
-		_RTX.pData->_rtxRArm.tarPos[i] = RArm->tarJoint(i);
-		_RTX.pData->_rtxLArm.errPos[i] = LArm->errJoint(i);
-		_RTX.pData->_rtxRArm.errPos[i] = RArm->errJoint(i);
-		_RTX.pData->_rtxLArm.plnPos[i] = LArm->plnJoint(i);
-		_RTX.pData->_rtxRArm.plnPos[i] = RArm->plnJoint(i);
-		_RTX.pData->_rtxLArm.curVel[i] = LArm->velJoint(i);
-		_RTX.pData->_rtxRArm.curVel[i] = RArm->velJoint(i);
+		_RTX.pData->_rtxLArm.curPos[i] = LArm->curJoint(i)*RAD2DEG;
+		_RTX.pData->_rtxRArm.curPos[i] = RArm->curJoint(i)*RAD2DEG;
+		_RTX.pData->_rtxLArm.tarPos[i] = LArm->tarJoint(i)*RAD2DEG;
+		_RTX.pData->_rtxRArm.tarPos[i] = RArm->tarJoint(i)*RAD2DEG;
+		_RTX.pData->_rtxLArm.errPos[i] = LArm->errJoint(i)*RAD2DEG;
+		_RTX.pData->_rtxRArm.errPos[i] = RArm->errJoint(i)*RAD2DEG;
+		_RTX.pData->_rtxLArm.plnPos[i] = LArm->plnJoint(i)*RAD2DEG;
+		_RTX.pData->_rtxRArm.plnPos[i] = RArm->plnJoint(i)*RAD2DEG;
+		_RTX.pData->_rtxLArm.curVel[i] = LArm->velJoint(i)*RAD2DEG;
+		_RTX.pData->_rtxRArm.curVel[i] = RArm->velJoint(i)*RAD2DEG;
 	}
 
 	// tcp data
-	for (i = 0; i < 6; i++)
+	for (i = 0; i < 3; i++)
 	{
 		_RTX.pData->_rtxLArm.curTCP[i] = LArm->curTCP(i);
 		_RTX.pData->_rtxRArm.curTCP[i] = RArm->curTCP(i);
@@ -64,6 +79,21 @@ void MaSaGRobot::updateSharedMemory()
 		_RTX.pData->_rtxRArm.plnTCP[i] = RArm->plnTCP(i);
 		_RTX.pData->_rtxLArm.velTCP[i] = LArm->velTCP(i);
 		_RTX.pData->_rtxRArm.velTCP[i] = RArm->velTCP(i);
+	}
+
+	// angle unit: degree
+	for (i = 3; i < 6; i++)
+	{
+		_RTX.pData->_rtxLArm.curTCP[i] = LArm->curTCP(i)*RAD2DEG;
+		_RTX.pData->_rtxRArm.curTCP[i] = RArm->curTCP(i)*RAD2DEG;
+		_RTX.pData->_rtxLArm.tarTCP[i] = LArm->tarTCP(i)*RAD2DEG;
+		_RTX.pData->_rtxRArm.tarTCP[i] = RArm->tarTCP(i)*RAD2DEG;
+		_RTX.pData->_rtxLArm.errTCP[i] = LArm->errTCP(i)*RAD2DEG;
+		_RTX.pData->_rtxRArm.errTCP[i] = RArm->errTCP(i)*RAD2DEG;
+		_RTX.pData->_rtxLArm.plnTCP[i] = LArm->plnTCP(i)*RAD2DEG;
+		_RTX.pData->_rtxRArm.plnTCP[i] = RArm->plnTCP(i)*RAD2DEG;
+		_RTX.pData->_rtxLArm.velTCP[i] = LArm->velTCP(i)*RAD2DEG;
+		_RTX.pData->_rtxRArm.velTCP[i] = RArm->velTCP(i)*RAD2DEG;
 	}
 }
 
@@ -143,7 +173,7 @@ void MaSaGRobot::ControlLaw()
 
 void MaSaGRobot::commandOutput()
 {
-	LArm->torqueCMD();
+   	// LArm->torqueCMD();
 	RArm->torqueCMD();
 }
 
@@ -162,9 +192,9 @@ void MaSaGRobot::shoulderPOS(int arm_index, int direction_index, float angle)
 	if (arm_index == LEFT_ARM)
 	{
 		LArm->joint[0]->driver->haltOff();
-		Sleep(2000);
+		Sleep(100);
 
-		targetPos = angle * resEncoder_ARM[0] * gearRatio_ARM[0];
+		targetPos = angle / 360.0f * LArm->joint[0]->driver->_resEncoder * LArm->joint[0]->_gearRatio;
 		if (direction_index == INWARD)
 			LArm->joint[0]->driver->cmdPosition(-targetPos, REL_MOTION);
 		else if(direction_index == OUTWARD)
@@ -173,9 +203,9 @@ void MaSaGRobot::shoulderPOS(int arm_index, int direction_index, float angle)
 	else if (arm_index == RIGHT_ARM)
 	{
 		RArm->joint[0]->driver->haltOff();
-		Sleep(2000);
+		Sleep(100);
 
-		targetPos = angle * resEncoder_ARM[0] * gearRatio_ARM[0];
+		targetPos = angle / 360.0f * RArm->joint[0]->driver->_resEncoder * RArm->joint[0]->_gearRatio;
 		if (direction_index == INWARD)
 			RArm->joint[0]->driver->cmdPosition( targetPos, REL_MOTION);
 		else if (direction_index == OUTWARD)

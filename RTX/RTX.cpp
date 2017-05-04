@@ -107,7 +107,7 @@ int RTX::MotorParams_Init()
 	size = sizeof(PARAM_L1) / sizeof(PARAM_L1[0]);
 	for (i = 0; i < size; i++)
 	{
-		ret = NEC_CoE402SetParameter(pData->_rtxRArm.mAxis[1], PARAM_L1[i][0], PARAM_L1[i][1], PARAM_L1[i][2], PARAM_L1[i][3]);
+		ret = NEC_CoE402SetParameter(pData->_rtxLArm.mAxis[1], PARAM_L1[i][0], PARAM_L1[i][1], PARAM_L1[i][2], PARAM_L1[i][3]);
 		if (ret != ECERR_SUCCESS) { RtPrintf("NEC_CoE402SetParameter() error %d Parameter %d of L1\n", ret, i); return 1; }
 	}
 
@@ -115,7 +115,7 @@ int RTX::MotorParams_Init()
 	size = sizeof(PARAM_L2) / sizeof(PARAM_L2[0]);
 	for (i = 0; i < size; i++)
 	{
-		ret = NEC_CoE402SetParameter(pData->_rtxRArm.mAxis[2], PARAM_L2[i][0], PARAM_L2[i][1], PARAM_L2[i][2], PARAM_L2[i][3]);
+		ret = NEC_CoE402SetParameter(pData->_rtxLArm.mAxis[2], PARAM_L2[i][0], PARAM_L2[i][1], PARAM_L2[i][2], PARAM_L2[i][3]);
 		if (ret != ECERR_SUCCESS) { RtPrintf("NEC_CoE402SetParameter() error %d Parameter %d of L2\n", ret, i); return 1; }
 	}
 
@@ -123,7 +123,7 @@ int RTX::MotorParams_Init()
 	size = sizeof(PARAM_L3) / sizeof(PARAM_L3[0]);
 	for (i = 0; i < size; i++)
 	{
-		ret = NEC_CoE402SetParameter(pData->_rtxRArm.mAxis[3], PARAM_L3[i][0], PARAM_L3[i][1], PARAM_L3[i][2], PARAM_L3[i][3]);
+		ret = NEC_CoE402SetParameter(pData->_rtxLArm.mAxis[3], PARAM_L3[i][0], PARAM_L3[i][1], PARAM_L3[i][2], PARAM_L3[i][3]);
 		if (ret != ECERR_SUCCESS) { RtPrintf("NEC_CoE402SetParameter() error %d Parameter %d of L3\n", ret, i); return 1; }
 	}
 
@@ -131,7 +131,7 @@ int RTX::MotorParams_Init()
 	size = sizeof(PARAM_L4) / sizeof(PARAM_L4[0]);
 	for (i = 0; i < size; i++)
 	{
-		ret = NEC_CoE402SetParameter(pData->_rtxRArm.mAxis[4], PARAM_L4[i][0], PARAM_L4[i][1], PARAM_L4[i][2], PARAM_L4[i][3]);
+		ret = NEC_CoE402SetParameter(pData->_rtxLArm.mAxis[4], PARAM_L4[i][0], PARAM_L4[i][1], PARAM_L4[i][2], PARAM_L4[i][3]);
 		if (ret != ECERR_SUCCESS) { RtPrintf("NEC_CoE402SetParameter() error %d Parameter %d of L4\n", ret, i); return 1; }
 	}
 /*	
