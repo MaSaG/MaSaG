@@ -82,9 +82,9 @@ int mcDSA_E65::cmdTorque(float torque)
 	if (torque >= 0)
 		if (torque >= _ratedTorque)
 			torque = _ratedTorque;
-		else
-			if (torque <= -_ratedTorque)
-				torque = -_ratedTorque;
+	else
+		if (torque <= -_ratedTorque)
+			torque = -_ratedTorque;
 
 	short tarTorque = static_cast <short> (torque / _ratedTorque * 1000);
 	ret = NEC_CoE402SetTargetTorque(_nodeID, tarTorque);

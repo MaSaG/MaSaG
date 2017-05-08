@@ -31,10 +31,10 @@ Joint::Joint(void* mAxis, float gear, int encoder, float rated_torque, int drive
 	driver->_ratedTorque = rated_torque;
 }
 
-void Joint::updateJoint()
+void Joint::updateJoint(int cntOffset)
 {
 	driver->readEncoder();
-	_angle = (float)driver->_countEncoder / _gearRatio / driver->_resEncoder * 2*M_PI;
+	_angle = (float)(driver->_countEncoder + cntOffset) / _gearRatio / driver->_resEncoder * 2*M_PI;
 }
 
 Joint::~Joint()

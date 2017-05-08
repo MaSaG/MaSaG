@@ -16,8 +16,8 @@ typedef struct
 	F32_T		plnPos[ARM_DOF];
 	F32_T		curVel[ARM_DOF];
 	// torque command and output
-	I16_T		actTorque[ARM_DOF];
-	I16_T		tarTorque[ARM_DOF];
+	F32_T		actTorque[ARM_DOF];
+	F32_T		tarTorque[ARM_DOF];
 	// TCP information
 	F32_T		curTCP[6];
 	F32_T		tarTCP[6];
@@ -29,6 +29,7 @@ typedef struct
 	// ethercat device information
 	U16_T		slaveState[ARM_DOF];
 	U8_T		controlMode[ARM_DOF];
+	I32_T		cntTimer;
 }RTX_ARM_DATA;
 
 typedef struct

@@ -1,7 +1,7 @@
 #ifndef SYSTEM_PARAMS
 #define SYSTEM_PARAMS
 
-#define SERVOLOOP_TIME 1 // unit : ms   (Set Servo Loop Interrupt time)
+#define SERVOLOOP_TIME 0.001 // unit : ms   (Set Servo Loop Interrupt time)
 
 const int	resEncoder_ARM[7]   = {2000, 2000, 4096, 4096, 4096, 4096, 4096}; // 編碼器之值
 const float gearRatio_ARM[7]    = {100.0, 100.0, 200.0, 193.75, 196.153846, 96.875, 196.774194};
@@ -43,10 +43,10 @@ enum{ READY_CMD,			// 0
 
 
 const float PI  = 3.1415926f;
-const float Mg1 = 19.6f;			// 2*9.8
-const float Mg2 = 19.6f;			// 2*9.8
-const float L1  = 0.3f;			// 臂長
-const float L2  = 0.3f;			// 臂長
+const float Mg1 = 39.2f;			// 2*9.8
+const float Mg2 = 24.5f;			// 2*9.8
+const float L1  = 0.13f;			// 臂長
+const float L2  = 0.12f;			// 臂長
 
 
 /* ****************************************************************************************************

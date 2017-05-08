@@ -237,6 +237,36 @@ void CSample2AxesControl_MFCDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_REAL_POS98, mVelTCPRa);
 	DDX_Control(pDX, IDC_EDIT_REAL_POS99, mVelTCPRb);
 	DDX_Control(pDX, IDC_EDIT_REAL_POS100, mVelTCPRc);
+	DDX_Control(pDX, IDC_EDIT2, mTimerCntLArm);
+	DDX_Control(pDX, IDC_EDIT3, mTimerCntRArm);
+	DDX_Control(pDX, IDC_EDIT_POS23, mTarTorL0);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS125, mTarTorL1);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS126, mTarTorL2);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS127, mTarTorL3);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS128, mTarTorL4);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS129, mTarTorL5);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS130, mTarTorL6);
+	DDX_Control(pDX, IDC_EDIT_POS24, mTarTorR0);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS131, mTarTorR1);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS132, mTarTorR2);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS133, mTarTorR3);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS134, mTarTorR4);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS135, mTarTorR5);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS136, mTarTorR6);
+	DDX_Control(pDX, IDC_EDIT_POS25, mCurTorL0);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS137, mCurTorL1);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS138, mCurTorL2);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS139, mCurTorL3);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS140, mCurTorL4);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS141, mCurTorL5);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS142, mCurTorL6);
+	DDX_Control(pDX, IDC_EDIT_POS26, mCurTorR0);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS143, mCurTorR1);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS144, mCurTorR2);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS145, mCurTorR3);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS146, mCurTorR4);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS147, mCurTorR5);
+	DDX_Control(pDX, IDC_EDIT_REAL_POS148, mCurTorR6);
 }
 
 BEGIN_MESSAGE_MAP(CSample2AxesControl_MFCDlg, CDialogEx)
@@ -644,6 +674,38 @@ void CSample2AxesControl_MFCDlg::OnTimer(UINT_PTR nIDEvent)
 		t.Format(_T("%f"), p->_rtxRArm.curVel[5]);		mActVelR5.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxRArm.curVel[6]);		mActVelR6.SetWindowText(t);
 		
+		// Actual Torque of Joint
+		t.Format(_T("%f"), p->_rtxLArm.actTorque[0]);		mCurTorL0.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.actTorque[1]);		mCurTorL1.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.actTorque[2]);		mCurTorL2.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.actTorque[3]);		mCurTorL3.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.actTorque[4]);		mCurTorL4.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.actTorque[5]);		mCurTorL5.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.actTorque[6]);		mCurTorL6.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.actTorque[0]);		mCurTorR0.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.actTorque[1]);		mCurTorR1.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.actTorque[2]);		mCurTorR2.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.actTorque[3]);		mCurTorR3.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.actTorque[4]);		mCurTorR4.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.actTorque[5]);		mCurTorR5.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.actTorque[6]);		mCurTorR6.SetWindowText(t);		
+		
+		// Target Torque of Joint
+		t.Format(_T("%f"), p->_rtxLArm.tarTorque[0]);		mTarTorL0.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.tarTorque[1]);		mTarTorL1.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.tarTorque[2]);		mTarTorL2.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.tarTorque[3]);		mTarTorL3.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.tarTorque[4]);		mTarTorL4.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.tarTorque[5]);		mTarTorL5.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.tarTorque[6]);		mTarTorL6.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTorque[0]);		mTarTorR0.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTorque[1]);		mTarTorR1.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTorque[2]);		mTarTorR2.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTorque[3]);		mTarTorR3.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTorque[4]);		mTarTorR4.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTorque[5]);		mTarTorR5.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTorque[6]);		mTarTorR6.SetWindowText(t);
+
 		// Force-Torque Sensor, Fx, Fy, Fz, Tx, Ty, Tz
 		t.Format(_T("%f"), p->_rtxLArm.FTSensor[0]);	mFxL.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxLArm.FTSensor[1]);	mFyL.SetWindowText(t);
@@ -727,6 +789,10 @@ void CSample2AxesControl_MFCDlg::OnTimer(UINT_PTR nIDEvent)
 		t.Format(_T("%f"), p->_rtxRArm.velTCP[3]);		mVelTCPRa.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxRArm.velTCP[4]);		mVelTCPRb.SetWindowText(t);
 		t.Format(_T("%f"), p->_rtxRArm.velTCP[5]);		mVelTCPRc.SetWindowText(t);
+
+		// is_busy flag
+		t.Format(_T("%d"), p->_rtxLArm.cntTimer);		mTimerCntLArm.SetWindowText(t);
+		t.Format(_T("%d"), p->_rtxRArm.cntTimer);		mTimerCntRArm.SetWindowText(t);
 
 	}
 	CDialogEx::OnTimer(nIDEvent);

@@ -12,8 +12,17 @@ Manipulator::Manipulator(RTX_ARM_DATA* _rtxArm)
 
 	mtn = new MaSaGTech;
 
+	cntOffset[0] = 0;
+	cntOffset[1] = -50000;
+	cntOffset[2] = -204800;
+	cntOffset[3] = 0;
+	cntOffset[4] = 0;
+	cntOffset[5] = 0;
+	cntOffset[6] = 201497;
+	
 	curTCP_T.matrix().setZero();
 	curTCP.setZero();
+	
 	tarTCP_T = curTCP_T;
 	tarTCP = curTCP;
 	plnTCP = curTCP;
@@ -21,10 +30,19 @@ Manipulator::Manipulator(RTX_ARM_DATA* _rtxArm)
 	velTCP.setZero();
 
 	curJoint.setZero();
+	curJoint[1] = -M_PI/2;
+	curJoint[2] = M_PI/2;
+	curJoint[6] = M_PI/2;
 	tarJoint = curJoint;
 	plnJoint = curJoint;
 	errJoint.setZero();
 	velJoint.setZero();
+
+	is_busy = false;
+	control_mode = Free_Mode;
+	planner_mode = Planner_Idle;
+	timer_cnt = 0;
+	static_cnt = 0;
 
 }
 
@@ -33,17 +51,31 @@ void Manipulator::encoderFB()
 	int i;
 	for (i = 0; i < ARM_DOF-2; i++)
 	{
-		joint[i]->updateJoint();
+		joint[i]->updateJoint(cntOffset[i]);
 		cntJoint(i) = joint[i]->driver->_countEncoder;
 		curJoint(i) = joint[i]->_angle;
+	}
+}
+
+void Manipulator::torqueFB()
+{
+	int i;
+	for (i = 0; i < ARM_DOF - 2; i++)
+	{
+		joint[i]->driver->readTorque(actTorque[i]);
+		actTorque[i] *= joint[i]->_gearRatio;
 	}
 }
 
 void Manipulator::torqueCMD()
 {
 	int i;
+	float _gearRatio;
 	for (i = 1; i < ARM_DOF; i++)
-		joint[i]->driver->cmdTorque(torque(i));
+	{
+		_gearRatio = joint[i]->_gearRatio;
+		joint[i]->driver->cmdTorque(tarTorque(i) / _gearRatio);
+	}
 }
 
 void Manipulator::update()

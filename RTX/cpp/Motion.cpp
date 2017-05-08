@@ -81,7 +81,8 @@ void Motion::MOV_TCP_RAPID(Manipulator* arm, Transform& movT)
 			arm->static_cnt++;
 		if (arm->static_cnt >= CNT_NUM_TCP)
 		{
-			arm->is_busy = false;
+			
+arm->is_busy = false;
 			break;
 		}
 	}
@@ -106,7 +107,7 @@ void Motion::MOV_JOINT(Manipulator* arm, float q, int n, float t)
 	while (1)
 		if (arm->timer_cnt >= total_cnt)
 		{
-			arm->is_busy = false;
+			FREE_MODE(arm);
 			break;
 		}
 }
@@ -224,6 +225,7 @@ void Motion::MOV_JOINT_RAPID(Manipulator* arm, Vectornf vec_q)
 
 void Motion::FREE_MODE(Manipulator* arm)
 {
+	arm->is_busy = false;
 	arm->planner_mode = Planner_Idle;
 	arm->control_mode = Free_Mode;
 }

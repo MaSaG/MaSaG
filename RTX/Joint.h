@@ -8,7 +8,7 @@ class Joint
 {
 public:
 	Joint(void* mAxis, float gear, int encoder, float rated_torque, int driver_type);
-	void updateJoint();
+	void updateJoint(int cntOffset);
 	~Joint();
 
 	float		_angle;

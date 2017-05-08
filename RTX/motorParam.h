@@ -43,7 +43,7 @@ const int PARAM_L2[][4] =
 	{ 0x30A0, 0x02, 4, 2437 },				//I (auto tune後結果)
 	{ 0x30A0, 0x03, 4, 28573 },				//FF (auto tune後結果)
 	{ 0x607D, 0x01, 4, -2147483647 },		//Min Position Limit
-	{ 0x607D, 0x02, 4, 2147483647 },		//Max Position Limit
+	{ 0x607D, 0x02, 4, 2147483647 }		//Max Position Limit
 };
 
 // Left 3: MAXPOS + RE40 (CST mode)
@@ -59,7 +59,7 @@ const int PARAM_L3[][4] =
 	{ 0x30A0, 0x02, 4, 2437 },				//I (auto tune後結果)
 	{ 0x30A0, 0x03, 4, 28573 },				//FF (auto tune後結果)
 	{ 0x607D, 0x01, 4, -2147483647 },		//Min Position Limit
-	{ 0x607D, 0x02, 4, 2147483647 },		//Max Position Limit
+	{ 0x607D, 0x02, 4, 2147483647 }		//Max Position Limit
 };
 
 // Left 4: MAXPOS + RE40 (CST mode)
@@ -75,7 +75,7 @@ const int PARAM_L4[][4] =
 	{ 0x30A0, 0x02, 4, 2437 },				//I (auto tune後結果)
 	{ 0x30A0, 0x03, 4, 28573 },				//FF (auto tune後結果)
 	{ 0x607D, 0x01, 4, -2147483647 },		//Min Position Limit
-	{ 0x607D, 0x02, 4, 2147483647 },		//Max Position Limit
+	{ 0x607D, 0x02, 4, 2147483647 }		//Max Position Limit
 };
 
 // Left 5: mcDSA-E65 + RE25 (PT mode)
@@ -185,7 +185,7 @@ const int PARAM_R2[][4] =
 	{ 0x30A0, 0x02, 4, 2437 },				//I (auto tune後結果)
 	{ 0x30A0, 0x03, 4, 28573 },				//FF (auto tune後結果)
 	{ 0x607D, 0x01, 4, -2147483647 },		//Min Position Limit
-	{ 0x607D, 0x02, 4, 2147483647 },		//Max Position Limit
+	{ 0x607D, 0x02, 4, 2147483647 }			//Max Position Limit
 };
 
 // Right 3: MAXPOS + RE40 (CST mode)
@@ -201,7 +201,7 @@ const int PARAM_R3[][4] =
 	{ 0x30A0, 0x02, 4, 2437 },				//I (auto tune後結果)
 	{ 0x30A0, 0x03, 4, 28573 },				//FF (auto tune後結果)
 	{ 0x607D, 0x01, 4, -2147483647 },		//Min Position Limit
-	{ 0x607D, 0x02, 4, 2147483647 },		//Max Position Limit
+	{ 0x607D, 0x02, 4, 2147483647 }			//Max Position Limit
 };
 
 // Right 4: MAXPOS + RE40 (CST mode)
@@ -217,7 +217,7 @@ const int PARAM_R4[][4] =
 	{ 0x30A0, 0x02, 4, 2437 },				//I (auto tune後結果)
 	{ 0x30A0, 0x03, 4, 28573 },				//FF (auto tune後結果)
 	{ 0x607D, 0x01, 4, -2147483647 },		//Min Position Limit
-	{ 0x607D, 0x02, 4, 2147483647 },		//Max Position Limit
+	{ 0x607D, 0x02, 4, 2147483647 }			//Max Position Limit
 };
 
 // Right 5: mcDSA-E65 + RE25 (PT mode)

@@ -48,7 +48,9 @@ public:
 	// joint velocity
 	Vectornf		velJoint;
 	// torque output
-	Vectornf		torque;
+	Vectornf		tarTorque;
+	// actual torque output
+	Vectornf		actTorque;
 
 
 	// impedance force
@@ -68,6 +70,7 @@ public:
 	int  static_cnt;
 
 	void encoderFB();
+	void torqueFB();
 	void torqueCMD();
 	void update();
 
@@ -75,8 +78,9 @@ public:
 	Manipulator(RTX_ARM_DATA* _rtxArm);
 	~Manipulator();
 	
+	int  cntOffset[ARM_DOF];
 private:
-	
+
 };
 
 

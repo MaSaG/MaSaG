@@ -6,10 +6,11 @@ MaSaGRobot::MaSaGRobot()
 {
 	LArm = new Manipulator(&_RTX.pData->_rtxLArm);
 	RArm = new Manipulator(&_RTX.pData->_rtxRArm);
+	LArm->cntOffset[2] *= -1;								// special defined 
 	RArm->joint[0]->driver->_resEncoder = 4096;				// special defined since we use RE40 motors with different specifications
-
+	
 	int i;
-	float limit_ratio = 0.2;
+	float limit_ratio = 1;
 	for (i = 0; i < ARM_DOF; i++)
 	{
 		LArm->joint[i]->driver->_ratedTorque *= limit_ratio;
@@ -34,6 +35,9 @@ void MaSaGRobot::updateFeedback()
 {
 	LArm->encoderFB();
 	RArm->encoderFB();
+
+	LArm->torqueFB();
+	RArm->torqueFB();
 
 	LArm->curJoint[3] *= -1;
 	LArm->curJoint[4] *= -1;
@@ -64,6 +68,10 @@ void MaSaGRobot::updateSharedMemory()
 		_RTX.pData->_rtxRArm.plnPos[i] = RArm->plnJoint(i)*RAD2DEG;
 		_RTX.pData->_rtxLArm.curVel[i] = LArm->velJoint(i)*RAD2DEG;
 		_RTX.pData->_rtxRArm.curVel[i] = RArm->velJoint(i)*RAD2DEG;
+		_RTX.pData->_rtxLArm.tarTorque[i] = LArm->tarTorque(i);
+		_RTX.pData->_rtxRArm.tarTorque[i] = RArm->tarTorque(i);
+		_RTX.pData->_rtxLArm.actTorque[i] = LArm->actTorque(i);
+		_RTX.pData->_rtxRArm.actTorque[i] = RArm->actTorque(i);
 	}
 
 	// tcp data
@@ -95,6 +103,9 @@ void MaSaGRobot::updateSharedMemory()
 		_RTX.pData->_rtxLArm.velTCP[i] = LArm->velTCP(i)*RAD2DEG;
 		_RTX.pData->_rtxRArm.velTCP[i] = RArm->velTCP(i)*RAD2DEG;
 	}
+
+	_RTX.pData->_rtxLArm.cntTimer = LArm->timer_cnt;
+	_RTX.pData->_rtxRArm.cntTimer = RArm->timer_cnt;
 }
 
 void MaSaGRobot::MotionTrajGen()
@@ -174,6 +185,8 @@ void MaSaGRobot::ControlLaw()
 void MaSaGRobot::commandOutput()
 {
    	// LArm->torqueCMD();
+	RArm->tarTorque(2) *= -1;
+	RArm->tarTorque(3) *= -1;
 	RArm->torqueCMD();
 }
 
