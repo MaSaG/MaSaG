@@ -71,7 +71,7 @@ void Manipulator::torqueCMD()
 {
 	int i;
 	float _gearRatio;
-	for (i = 1; i < ARM_DOF; i++)
+	for (i = 1; i < ARM_DOF-2; i++)
 	{
 		_gearRatio = joint[i]->_gearRatio;
 		joint[i]->driver->cmdTorque(tarTorque(i) / _gearRatio);
@@ -81,18 +81,18 @@ void Manipulator::torqueCMD()
 void Manipulator::update()
 {
 	// current TCP Transoformation matrix
-	curTCP_T = kin.ForwardKinematics(curJoint);
-	curTCP = kin.Transform2Vector6f(curTCP_T);
+	//curTCP_T = kin.ForwardKinematics(curJoint);
+	//curTCP = kin.Transform2Vector6f(curTCP_T);
 	// Jacobian
-	kin.updateJacobian(curJoint, Jacobian);
+	//kin.updateJacobian(curJoint, Jacobian);
 	// TCP velocity
-	velTCP = Jacobian*curJoint;
+	//velTCP = Jacobian*curJoint;
 	// TCP error, TCP is defined as [x y z a b c]
-	errTCP = tarTCP - curTCP;
+	//errTCP = tarTCP - curTCP;
 
 	// k, k-1, k-2 update
-	q1 = curJoint;		
 	q2 = q1;
+	q1 = curJoint;		
 	// joint error
 	errJoint = tarJoint - curJoint;
 	// joint angular velocity

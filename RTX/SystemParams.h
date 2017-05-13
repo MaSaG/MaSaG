@@ -24,9 +24,9 @@ enum{ READY_CMD,			// 0
 	  TEST5_CMD,			// 5
 	  TEST6_CMD,			// 6
 	  TEST7_CMD,			// 7
-	  TEST8_CMD,			// 8
-	  TEST9_CMD,			// 9
-	  TEST10_CMD,			// 10
+	  FREE_MODE_CMD,		// 8
+	  MIRROR_CMD,			// 9
+	  MIMMIC_CMD,			// 10
 	  TEST11_CMD,			// 11
 	  TEST12_CMD,			// 12
 	  TEST13_CMD,			// 13

@@ -527,14 +527,14 @@ void CSample2AxesControl_MFCDlg::OnTimer(UINT_PTR nIDEvent)
 		case TEST7_CMD:
 			mCMDState.SetWindowText(_T("TEST7_CMD"));
 			break;
-		case TEST8_CMD:
-			mCMDState.SetWindowText(_T("TEST8_CMD"));
+		case FREE_MODE_CMD:
+			mCMDState.SetWindowText(_T("FREE_MODE_CMD"));
 			break;
-		case TEST9_CMD:
-			mCMDState.SetWindowText(_T("TEST9_CMD"));
+		case MIRROR_CMD:
+			mCMDState.SetWindowText(_T("MIRROR_CMD"));
 			break;
-		case TEST10_CMD:
-			mCMDState.SetWindowText(_T("TEST10_CMD"));
+		case MIMMIC_CMD:
+			mCMDState.SetWindowText(_T("MIMMIC_CMD"));
 			break;
 		case TEST11_CMD:
 			mCMDState.SetWindowText(_T("TEST11_CMD"));
@@ -924,7 +924,7 @@ void CSample2AxesControl_MFCDlg::OnBnClickedButton13()
 	// TODO: 在此加入控制項告知處理常式程式碼
 	USER_DAT *p;
 	p = (USER_DAT *)location;
-	p->_rtxCMD_ST.Command = TEST8_CMD;
+	p->_rtxCMD_ST.Command = FREE_MODE_CMD;
 }
 
 
@@ -933,7 +933,7 @@ void CSample2AxesControl_MFCDlg::OnBnClickedButton14()
 	// TODO: 在此加入控制項告知處理常式程式碼
 	USER_DAT *p;
 	p = (USER_DAT *)location;
-	p->_rtxCMD_ST.Command = TEST9_CMD;
+	p->_rtxCMD_ST.Command = MIRROR_CMD;
 }
 
 
@@ -943,7 +943,7 @@ void CSample2AxesControl_MFCDlg::OnBnClickedButton15()
 	// TODO: 在此加入控制項告知處理常式程式碼
 	USER_DAT *p;
 	p = (USER_DAT *)location;
-	p->_rtxCMD_ST.Command = TEST10_CMD;
+	p->_rtxCMD_ST.Command = MIMMIC_CMD;
 }
 
 

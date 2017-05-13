@@ -48,11 +48,13 @@ int main(int  argc,	char **argv)
 int execProgram(int& cmd)
 {
 	int i;
+	Vectornf joint_pos;
 	switch (cmd)
 	{
 	case TEST1_CMD:
 		RtPrintf("test1 command\n");
-		robot->shoulderPOS(LEFT_ARM, INWARD, 5);
+		robot->LArm->mtn->FREE_MODE(robot->LArm);
+		robot->RArm->mtn->FREE_MODE(robot->RArm);
 		cmd = READY_CMD;
 		break;
 
@@ -76,7 +78,7 @@ int execProgram(int& cmd)
 
 	case TEST5_CMD:
 		RtPrintf("test5 command\n");
-
+		robot->shoulderPOS(LEFT_ARM, INWARD, 5);
 		cmd = READY_CMD;
 		break;
 
@@ -90,18 +92,22 @@ int execProgram(int& cmd)
 		cmd = READY_CMD;
 		break;
 
-	case TEST8_CMD:
-		RtPrintf("test8 command\n");
+	case FREE_MODE_CMD:
+		RtPrintf("Free Mode command\n");
+		robot->LArm->mtn->FREE_MODE(robot->LArm);
+		robot->RArm->mtn->FREE_MODE(robot->RArm);
 		cmd = READY_CMD;
 		break;
 
-	case TEST9_CMD:
-		RtPrintf("test9 command\n");
+	case MIRROR_CMD:
+		RtPrintf("MIRROR\n");
+		robot->RArm->mtn->MIRROR(robot->RArm);
 		cmd = READY_CMD;
 		break;
 
-	case TEST10_CMD:
-		RtPrintf("test10 command\n");
+	case MIMMIC_CMD:
+		RtPrintf("MIMMIC\n");
+		robot->RArm->mtn->MIMMIC(robot->RArm);
 		cmd = READY_CMD;
 		break;
 
@@ -164,7 +170,17 @@ int execProgram(int& cmd)
 		break;
 
 	case HOME_CMD:
-		RtPrintf("Reset command\n");
+		RtPrintf("Home command\n");
+		
+		joint_pos[0] = 0;
+		joint_pos[1] = -90;
+		joint_pos[2] = 90;
+		joint_pos[3] = 0;
+		joint_pos[4] = 0;
+		joint_pos[5] = 0;
+		joint_pos[6] = 0;
+		robot->RArm->mtn->MOV_JOINT(robot->RArm, joint_pos, 5.0f);
+		
 		cmd = READY_CMD;
 		break;
 

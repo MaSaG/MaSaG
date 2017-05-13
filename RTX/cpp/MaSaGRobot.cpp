@@ -127,6 +127,12 @@ void MaSaGRobot::MotionTrajGen()
 		case OTG_Joint_Timer:
 			LArm->mtn->otgJoint_timer(LArm);
 			break;
+		case Mimmic:
+			LArm->mtn->Mimmic_timer(LArm, RArm);
+			break;
+		case Mirror:
+			LArm->mtn->Mirror_timer(LArm, RArm);
+			break;
 		}
 	}
 	
@@ -147,8 +153,15 @@ void MaSaGRobot::MotionTrajGen()
 		case OTG_Joint_Timer:
 			RArm->mtn->otgJoint_timer(RArm);
 			break;
+		case Mimmic:
+			RArm->mtn->Mimmic_timer(RArm, LArm);
+			break;
+		case Mirror:
+			RArm->mtn->Mirror_timer(RArm, LArm);
+			break;
 		}
 	}
+
 }
 
 void MaSaGRobot::ControlLaw()

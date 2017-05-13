@@ -81,8 +81,7 @@ void Motion::MOV_TCP_RAPID(Manipulator* arm, Transform& movT)
 			arm->static_cnt++;
 		if (arm->static_cnt >= CNT_NUM_TCP)
 		{
-			
-arm->is_busy = false;
+			arm->is_busy = false;
 			break;
 		}
 	}
@@ -230,6 +229,20 @@ void Motion::FREE_MODE(Manipulator* arm)
 	arm->control_mode = Free_Mode;
 }
 
+void Motion::MIMMIC(Manipulator* arm)
+{
+	arm->is_busy = true;
+	arm->planner_mode = Mimmic;
+	arm->control_mode = Joint_Mode;
+}
+
+void Motion::MIRROR(Manipulator* arm)
+{
+	arm->is_busy = true;
+	arm->planner_mode = Mirror;
+	arm->control_mode = Joint_Mode;
+}
+
 void Motion::cubicTCP_timer(Manipulator* arm)
 {
 	// determine the target tcp position according to the time index
@@ -302,6 +315,27 @@ void Motion::otgJoint_timer(Manipulator* arm)
 		arm->plnJoint(i) = velPln;
 	}
 
+}
+
+void Motion::Mimmic_timer(Manipulator* slave, Manipulator* master)
+{
+	slave->tarJoint = master->curJoint;
+	slave->plnJoint = slave->tarJoint;
+	slave->tarTCP_T = master->curTCP_T;
+	slave->tarTCP = master->curTCP;
+	slave->plnTCP = slave->tarTCP;
+}
+
+void Motion::Mirror_timer(Manipulator* slave, Manipulator* master)
+{
+	slave->tarJoint = master->curJoint;
+	slave->tarJoint[1] = -slave->tarJoint[1] - M_PI;
+	slave->tarJoint[3] *= -1;
+	slave->plnJoint = slave->tarJoint;
+
+	slave->tarTCP_T = slave->kin.ForwardKinematics(slave->tarJoint);
+	slave->tarTCP = slave->kin.Transform2Vector6f(slave->tarTCP_T);
+	slave->plnTCP = slave->tarTCP;
 }
 
 void Motion::tcpCubic(Manipulator* arm, Vector6f xf, float t)
