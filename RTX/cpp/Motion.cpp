@@ -9,11 +9,18 @@
 #define CNT_NUM_JOINT 50
 #define EPSILON_JOINT_VEL 0.1
 
-#define DEG2RAD (M_PI/180)
+#define RAD2DEG 180.0f/M_PI
+#define DEG2RAD M_PI/180.0f
+#define STORAGE_SPACE 180000
+
+const float gap = 0.0000001*DEG2RAD;
 
 Motion::Motion()
 {
 	initParams();
+	
+	trajTeach = NULL;
+	cnt_trajTeach = NULL;
 }
 
 void Motion::MOV_TCP(Manipulator* arm, Transform& movT, float t)
@@ -243,6 +250,60 @@ void Motion::MIRROR(Manipulator* arm)
 	arm->control_mode = Joint_Mode;
 }
 
+void Motion::TEACH(Manipulator* arm)
+{
+	if (trajTeach != NULL)
+	{
+		delete [] trajTeach;
+		delete [] cnt_trajTeach;
+	}
+
+	// allocate memory space
+	trajTeach = new Vectornf[STORAGE_SPACE];
+	cnt_trajTeach = new int[STORAGE_SPACE];
+
+	// initialization
+	int i;
+	for (i = 0; i < STORAGE_SPACE; i++)
+	{
+		trajTeach[i].setZero();
+		cnt_trajTeach[i] = 0;
+	}
+	
+	arm->is_busy = true;
+	arm->timer_cnt = 0;
+	trajTeach[0] = arm->curJoint;
+	teach_counter = 1;
+	arm->planner_mode = Teach_Mode;
+	arm->control_mode = Free_Mode;
+}
+
+void Motion::PLAY(Manipulator* arm)
+{
+	if (trajTeach != NULL)
+	{
+		// move to the initial point of taught trajectory
+		MOV_JOINT(arm, trajTeach[0] * RAD2DEG, 5.0);
+
+		RtPrintf("Playing mode\n");
+
+		// starting replay the motion
+		arm->timer_cnt = 0;
+		teach_counter = 1;
+		arm->planner_mode = Play_Mode;
+		arm->control_mode = Joint_Mode;
+		arm->is_busy = true;
+
+		while (1)
+			if (trajTeach[teach_counter].norm() < 0.00001f)
+			{
+				RtPrintf("Play mode to Free mode\n");
+				FREE_MODE(arm);
+				break;
+			}
+	}
+}
+
 void Motion::cubicTCP_timer(Manipulator* arm)
 {
 	// determine the target tcp position according to the time index
@@ -336,6 +397,30 @@ void Motion::Mirror_timer(Manipulator* slave, Manipulator* master)
 	slave->tarTCP_T = slave->kin.ForwardKinematics(slave->tarJoint);
 	slave->tarTCP = slave->kin.Transform2Vector6f(slave->tarTCP_T);
 	slave->plnTCP = slave->tarTCP;
+}
+
+void Motion::Teach_timer(Manipulator* arm)
+{
+	int i;
+	if (teach_counter < STORAGE_SPACE)
+		if ((arm->curJoint - arm->q1).norm() > gap)
+		{
+			trajTeach[teach_counter] = arm->curJoint;
+			cnt_trajTeach[teach_counter] = arm->timer_cnt;
+			teach_counter++;
+		}
+
+	arm->timer_cnt++;
+}
+
+void Motion::Play_timer(Manipulator* arm)
+{
+	if (arm->timer_cnt > cnt_trajTeach[teach_counter])
+		teach_counter++;
+	arm->tarJoint = trajTeach[teach_counter];
+	arm->plnJoint = arm->tarJoint;
+
+	arm->timer_cnt++;
 }
 
 void Motion::tcpCubic(Manipulator* arm, Vector6f xf, float t)

@@ -87,14 +87,14 @@ const int PARAM_L5[][4] =
 	{ 0x2011, 0x06, 4, 0x64616F6C },		//RestoreDefaultParameters_Application_2
 	{ 0x6402, 0x00, 2, 0x8000 },			//MotorType
 	{ 0x3910, 0x00, 1, 2 },					//MOTOR_Microsteps
-	{ 0x3911, 0x00, 1, 0 },					//MOTOR_Polarity
-	{ 0x3350, 0x00, 2, 2410 },				//VEL_Feedback
-	{ 0x3550, 0x00, 2, 2410 },				//SVEL_Feedback
+	{ 0x3911, 0x00, 2, 0 },					//MOTOR_Polarity
+	{ 0x3350, 0x00, 4, 0x96A },				//VEL_Feedback
+	{ 0x3550, 0x00, 4, 0x96A },				//SVEL_Feedback
 	{ 0x3962, 0x00, 2, 4096 },				//Encoder resolution in counts
-	{ 0x3830, 0x00, 2, 50000 },				//PWM_Frequency
+	{ 0x3830, 0x00, 4, 50000 },				//PWM_Frequency
 	{ 0x3830, 0x01, 1, 1 },					//PWM_Mode
-	{ 0x3901, 0x00, 2, 3000 },				//Motor rated revolutions 
-	{ 0x3902, 0x00, 2, 2400 },				// Motor rated voltage
+	{ 0x3901, 0x00, 2, 14000 },				//Motor rated revolutions 
+	{ 0x3902, 0x00, 2, 24000 },				//Motor rated voltage
 	{ 0x3210, 0x00, 2, 60 },				//PI-Current controller - proportional factor
 	{ 0x3211, 0x00, 2, 74 },				//PI-Current controller - integral factor
 	{ 0x3221, 0x00, 4, 5000 },				//Current limit - max. positive
@@ -103,11 +103,12 @@ const int PARAM_L5[][4] =
 	{ 0x3224, 0x01, 4, 4500 },				//Dynamic current limit I*t - peak current
 	{ 0x3224, 0x02, 4, 1500 },				//Dynamic current limit I*t - continues current
 	{ 0x3224, 0x03, 2, 200 },				//Dynamic current limit I*t - time
-	{ 0x6060, 0x00, 2, 4 },					//Modes of operation //4: Torque profile mode (tq)
-	{ 0x6075, 0x00, 4, 120 },				//Motor rated current
+	{ 0x6060, 0x00, 1, 4 },					//Modes of operation //4: Torque profile mode (tq)
+	{ 0x6075, 0x00, 4, 1500 },				//Motor rated current
 	{ 0x6072, 0x00, 2, 1000 },				//Maximal torque
-	{ 0x608A, 0x00, 1, 172 },				//Position dimension index
-	{ 0x6065, 0x00, 4, 10000 }				//Following error window
+	{ 0x608A, 0x00, 1, 0xAC },				//Position dimension index
+	{ 0x6065, 0x00, 4, 10000 },				//Following error window
+	{ 0x6071, 0x00, 2, 0}					//Target Torque
 };
 
 // Left 6: mcDSA-E65 + RE25 (PT mode)
@@ -119,14 +120,14 @@ const int PARAM_L6[][4] =
 	{ 0x2011, 0x06, 4, 0x64616F6C },		//RestoreDefaultParameters_Application_2
 	{ 0x6402, 0x00, 2, 0x8000 },			//MotorType
 	{ 0x3910, 0x00, 1, 2 },					//MOTOR_Microsteps
-	{ 0x3911, 0x00, 1, 0 },					//MOTOR_Polarity
-	{ 0x3350, 0x00, 2, 2410 },				//VEL_Feedback
-	{ 0x3550, 0x00, 2, 2410 },				//SVEL_Feedback
+	{ 0x3911, 0x00, 2, 0 },					//MOTOR_Polarity
+	{ 0x3350, 0x00, 4, 0x96A },				//VEL_Feedback
+	{ 0x3550, 0x00, 4, 0x96A },				//SVEL_Feedback
 	{ 0x3962, 0x00, 2, 4096 },				//Encoder resolution in counts
-	{ 0x3830, 0x00, 2, 50000 },				//PWM_Frequency
+	{ 0x3830, 0x00, 4, 50000 },				//PWM_Frequency
 	{ 0x3830, 0x01, 1, 1 },					//PWM_Mode
-	{ 0x3901, 0x00, 2, 3000 },				//Motor rated revolutions 
-	{ 0x3902, 0x00, 2, 2400 },				//Motor rated voltage
+	{ 0x3901, 0x00, 2, 14000 },				//Motor rated revolutions 
+	{ 0x3902, 0x00, 2, 24000 },				//Motor rated voltage
 	{ 0x3210, 0x00, 2, 60 },				//PI-Current controller - proportional factor
 	{ 0x3211, 0x00, 2, 74 },				//PI-Current controller - integral factor
 	{ 0x3221, 0x00, 4, 5000 },				//Current limit - max. positive
@@ -135,11 +136,12 @@ const int PARAM_L6[][4] =
 	{ 0x3224, 0x01, 4, 4500 },				//Dynamic current limit I*t - peak current
 	{ 0x3224, 0x02, 4, 1500 },				//Dynamic current limit I*t - continues current
 	{ 0x3224, 0x03, 2, 200 },				//Dynamic current limit I*t - time
-	{ 0x6060, 0x00, 2, 4 },					//Modes of operation //4: Torque profile mode (tq)
-	{ 0x6075, 0x00, 4, 120 },				//Motor rated current
+	{ 0x6060, 0x00, 1, 4 },					//Modes of operation //4: Torque profile mode (tq)
+	{ 0x6075, 0x00, 4, 1500 },				//Motor rated current
 	{ 0x6072, 0x00, 2, 1000 },				//Maximal torque
-	{ 0x608A, 0x00, 1, 172 },				//Position dimension index
-	{ 0x6065, 0x00, 4, 10000 }				//Following error window
+	{ 0x608A, 0x00, 1, 0xAC },				//Position dimension index
+	{ 0x6065, 0x00, 4, 10000 },				//Following error window
+	{ 0x6071, 0x00, 2, 0}					//Target Torque
 };
 
 //-----------------------------------------------------------------------------------------------------------------------------//
@@ -229,14 +231,14 @@ const int PARAM_R5[][4] =
 	{ 0x2011, 0x06, 4, 0x64616F6C },		//RestoreDefaultParameters_Application_2
 	{ 0x6402, 0x00, 2, 0x8000 },			//MotorType
 	{ 0x3910, 0x00, 1, 2 },					//MOTOR_Microsteps
-	{ 0x3911, 0x00, 1, 0 },					//MOTOR_Polarity
-	{ 0x3350, 0x00, 2, 2410 },				//VEL_Feedback
-	{ 0x3550, 0x00, 2, 2410 },				//SVEL_Feedback
+	{ 0x3911, 0x00, 2, 0 },					//MOTOR_Polarity
+	{ 0x3350, 0x00, 4, 0x96A },				//VEL_Feedback
+	{ 0x3550, 0x00, 4, 0x96A },				//SVEL_Feedback
 	{ 0x3962, 0x00, 2, 4096 },				//Encoder resolution in counts
-	{ 0x3830, 0x00, 2, 50000 },				//PWM_Frequency
+	{ 0x3830, 0x00, 4, 50000 },				//PWM_Frequency
 	{ 0x3830, 0x01, 1, 1 },					//PWM_Mode
-	{ 0x3901, 0x00, 2, 3000 },				//Motor rated revolutions 
-	{ 0x3902, 0x00, 2, 2400 },				// Motor rated voltage
+	{ 0x3901, 0x00, 2, 14000 },				//Motor rated revolutions 
+	{ 0x3902, 0x00, 2, 24000 },				//Motor rated voltage
 	{ 0x3210, 0x00, 2, 60 },				//PI-Current controller - proportional factor
 	{ 0x3211, 0x00, 2, 74 },				//PI-Current controller - integral factor
 	{ 0x3221, 0x00, 4, 5000 },				//Current limit - max. positive
@@ -245,11 +247,12 @@ const int PARAM_R5[][4] =
 	{ 0x3224, 0x01, 4, 4500 },				//Dynamic current limit I*t - peak current
 	{ 0x3224, 0x02, 4, 1500 },				//Dynamic current limit I*t - continues current
 	{ 0x3224, 0x03, 2, 200 },				//Dynamic current limit I*t - time
-	{ 0x6060, 0x00, 2, 4 },					//Modes of operation //4: Torque profile mode (tq)
-	{ 0x6075, 0x00, 4, 120 },				//Motor rated current
+	{ 0x6060, 0x00, 1, 4 },					//Modes of operation //4: Torque profile mode (tq)
+	{ 0x6075, 0x00, 4, 1500 },				//Motor rated current
 	{ 0x6072, 0x00, 2, 1000 },				//Maximal torque
-	{ 0x608A, 0x00, 1, 172 },				//Position dimension index
-	{ 0x6065, 0x00, 4, 10000 }				//Following error window
+	{ 0x608A, 0x00, 1, 0xAC },				//Position dimension index
+	{ 0x6065, 0x00, 4, 10000 },				//Following error window
+	{ 0x6071, 0x00, 2, 0 }					//Target Torque
 };
 
 // Right 6: mcDSA-E65 + RE25 (PT mode)
@@ -261,14 +264,14 @@ const int PARAM_R6[][4] =
 	{ 0x2011, 0x06, 4, 0x64616F6C },		//RestoreDefaultParameters_Application_2
 	{ 0x6402, 0x00, 2, 0x8000 },			//MotorType
 	{ 0x3910, 0x00, 1, 2 },					//MOTOR_Microsteps
-	{ 0x3911, 0x00, 1, 0 },					//MOTOR_Polarity
-	{ 0x3350, 0x00, 2, 2410 },				//VEL_Feedback
-	{ 0x3550, 0x00, 2, 2410 },				//SVEL_Feedback
+	{ 0x3911, 0x00, 2, 0 },					//MOTOR_Polarity
+	{ 0x3350, 0x00, 4, 0x96A },				//VEL_Feedback
+	{ 0x3550, 0x00, 4, 0x96A },				//SVEL_Feedback
 	{ 0x3962, 0x00, 2, 4096 },				//Encoder resolution in counts
-	{ 0x3830, 0x00, 2, 50000 },				//PWM_Frequency
+	{ 0x3830, 0x00, 4, 50000 },				//PWM_Frequency
 	{ 0x3830, 0x01, 1, 1 },					//PWM_Mode
-	{ 0x3901, 0x00, 2, 3000 },				//Motor rated revolutions 
-	{ 0x3902, 0x00, 2, 2400 },				//Motor rated voltage
+	{ 0x3901, 0x00, 2, 14000 },				//Motor rated revolutions 
+	{ 0x3902, 0x00, 2, 24000 },				//Motor rated voltage
 	{ 0x3210, 0x00, 2, 60 },				//PI-Current controller - proportional factor
 	{ 0x3211, 0x00, 2, 74 },				//PI-Current controller - integral factor
 	{ 0x3221, 0x00, 4, 5000 },				//Current limit - max. positive
@@ -277,11 +280,12 @@ const int PARAM_R6[][4] =
 	{ 0x3224, 0x01, 4, 4500 },				//Dynamic current limit I*t - peak current
 	{ 0x3224, 0x02, 4, 1500 },				//Dynamic current limit I*t - continues current
 	{ 0x3224, 0x03, 2, 200 },				//Dynamic current limit I*t - time
-	{ 0x6060, 0x00, 2, 4 },					//Modes of operation //4: Torque profile mode (tq)
-	{ 0x6075, 0x00, 4, 120 },				//Motor rated current
+	{ 0x6060, 0x00, 1, 4 },					//Modes of operation //4: Torque profile mode (tq)
+	{ 0x6075, 0x00, 4, 1500 },				//Motor rated current
 	{ 0x6072, 0x00, 2, 1000 },				//Maximal torque
-	{ 0x608A, 0x00, 1, 172 },				//Position dimension index
-	{ 0x6065, 0x00, 4, 10000 }				//Following error window
+	{ 0x608A, 0x00, 1, 0xAC },				//Position dimension index
+	{ 0x6065, 0x00, 4, 10000 },				//Following error window
+	{ 0x6071, 0x00, 2, 0}					//Target Torque
 };
 
 

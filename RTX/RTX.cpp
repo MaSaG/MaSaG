@@ -68,16 +68,15 @@ int RTX::Get_Drivers_ID()
 	// Right 4, MAXPOS
 	ret = NEC_CoE402GetAxisId(masterId, 9, &pData->_rtxRArm.mAxis[4]);
 	if (ret != 0) { RtPrintf("NEC_CoE402GetAxisId failed! R %d", 4); return 1; }
-/*
 	// ON 0, Left F/T Sensor
 	ret = NEC_CoE402GetAxisId(masterId, 10, &pData->_rtxLArm.mAxis[7]);
 	if (ret != 0) { RtPrintf("NEC_CoE402GetAxisId failed! L %d", 7); return 1; }
 	// Left 5, mcDSA-E65
-	ret = NEC_CoE402GetAxisId(masterId, 11, &pData->_rtxLArm.mAxis[6]);
-	if (ret != 0) { RtPrintf("NEC_CoE402GetAxisId failed! L %d", 6); return 1; }
-	// Left 6, mcDSA-E65
-	ret = NEC_CoE402GetAxisId(masterId, 12, &pData->_rtxLArm.mAxis[5]);
+	ret = NEC_CoE402GetAxisId(masterId, 11, &pData->_rtxLArm.mAxis[5]);
 	if (ret != 0) { RtPrintf("NEC_CoE402GetAxisId failed! L %d", 5); return 1; }
+	// Left 6, mcDSA-E65
+	ret = NEC_CoE402GetAxisId(masterId, 12, &pData->_rtxLArm.mAxis[6]);
+	if (ret != 0) { RtPrintf("NEC_CoE402GetAxisId failed! L %d", 6); return 1; }
 	// ON 1, Right F/T Sensor
 	ret = NEC_CoE402GetAxisId(masterId, 13, &pData->_rtxRArm.mAxis[7]);
 	if (ret != 0) { RtPrintf("NEC_CoE402GetAxisId failed! R %d", 7); return 1; }
@@ -87,7 +86,7 @@ int RTX::Get_Drivers_ID()
 	// Right 6, mcDSA-E65
 	ret = NEC_CoE402GetAxisId(masterId, 15, &pData->_rtxRArm.mAxis[6]);
 	if (ret != 0) { RtPrintf("NEC_CoE402GetAxisId failed! R %d", 6); return 1; }
-*/
+
 	return 0;
 }
 
@@ -134,12 +133,12 @@ int RTX::MotorParams_Init()
 		ret = NEC_CoE402SetParameter(pData->_rtxLArm.mAxis[4], PARAM_L4[i][0], PARAM_L4[i][1], PARAM_L4[i][2], PARAM_L4[i][3]);
 		if (ret != ECERR_SUCCESS) { RtPrintf("NEC_CoE402SetParameter() error %d Parameter %d of L4\n", ret, i); return 1; }
 	}
-/*	
+	
 	// Left 5: mcDSA-E65 + RE25 (PT mode)
 	size = sizeof(PARAM_L5) / sizeof(PARAM_L5[0]);
 	for (i = 0; i < size; i++)
 	{
-		ret = NEC_CoE402SetParameter(pData->_rtxRArm.mAxis[5], PARAM_L5[i][0], PARAM_L5[i][1], PARAM_L5[i][2], PARAM_L5[i][3]);
+		ret = NEC_CoE402SetParameter(pData->_rtxLArm.mAxis[5], PARAM_L5[i][0], PARAM_L5[i][1], PARAM_L5[i][2], PARAM_L5[i][3]);
 		if (ret != ECERR_SUCCESS) { RtPrintf("NEC_CoE402SetParameter() error %d Parameter %d of L5\n", ret, i); return 1; }
 	}
 
@@ -147,10 +146,10 @@ int RTX::MotorParams_Init()
 	size = sizeof(PARAM_L6) / sizeof(PARAM_L6[0]);
 	for (i = 0; i < size; i++)
 	{
-		ret = NEC_CoE402SetParameter(pData->_rtxRArm.mAxis[6], PARAM_L6[i][0], PARAM_L6[i][1], PARAM_L6[i][2], PARAM_L6[i][3]);
+		ret = NEC_CoE402SetParameter(pData->_rtxLArm.mAxis[6], PARAM_L6[i][0], PARAM_L6[i][1], PARAM_L6[i][2], PARAM_L6[i][3]);
 		if (ret != ECERR_SUCCESS) { RtPrintf("NEC_CoE402SetParameter() error %d Parameter %d of L6\n", ret, i); return 1; }
 	}
-*/
+
 	//----------------------------------------------------------------------------------------------------------------------//
 
 	// Right 0: MAXPOS + RE40 (PP mode)
@@ -192,7 +191,7 @@ int RTX::MotorParams_Init()
 		ret = NEC_CoE402SetParameter(pData->_rtxRArm.mAxis[4], PARAM_R4[i][0], PARAM_R4[i][1], PARAM_R4[i][2], PARAM_R4[i][3]);
 		if (ret != ECERR_SUCCESS) { RtPrintf("NEC_CoE402SetParameter() error %d Parameter %d of R4\n", ret, i); return 1; }
 	}
-/*
+
 	// Right 5: mcDSA-E65 + RE25 (PT mode)
 	size = sizeof(PARAM_R5) / sizeof(PARAM_R5[0]);
 	for (i = 0; i < size; i++)
@@ -208,7 +207,7 @@ int RTX::MotorParams_Init()
 		ret = NEC_CoE402SetParameter(pData->_rtxRArm.mAxis[6], PARAM_R6[i][0], PARAM_R6[i][1], PARAM_R6[i][2], PARAM_R6[i][3]);
 		if (ret != ECERR_SUCCESS) { RtPrintf("NEC_CoE402SetParameter() error %d Parameter %d of R6\n", ret, i); return 1; }
 	}
-*/
+
 	return 0;
 }
 
@@ -259,7 +258,7 @@ int RTX::Init()
 	if (ret != ECERR_SUCCESS) { RtPrintf("NEC_RtSetMasterStateWait() error %d \n", ret); }
 
 	//Update PDO Mapping & Fault Reset
-	for (int i = 0; i < ARM_DOF-2; i++)
+	for (int i = 0; i < ARM_DOF; i++)
 	{
 		ret = NEC_CoE402UpdatePdoMapping(pData->_rtxLArm.mAxis[i]);
 		if (ret != 0) { RtPrintf("NEC_CoE402UpdatePdoMapping failed! %d L %d \n", ret, i); return 1; }
@@ -283,7 +282,7 @@ int RTX::Init()
 	RtPrintf("motor paramters initialization\n");
 
 	//Servo On
-	for (int i = 0; i < ARM_DOF-2; i++)
+	for (int i = 0; i < ARM_DOF; i++)
 	{
 		ret = NEC_CoE402ServoOn(pData->_rtxLArm.mAxis[i], 1);  // 0:ServoOff, 1:ServoOn
 		if (ret != ECERR_SUCCESS) { RtPrintf("NEC_CoE402ServoOn() error %d L %d \n", ret, i); return 1; }

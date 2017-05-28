@@ -20,8 +20,12 @@ Manipulator::Manipulator(RTX_ARM_DATA* _rtxArm)
 	cntOffset[5] = 0;
 	cntOffset[6] = 201497;
 	
-	curTCP_T.matrix().setZero();
-	curTCP.setZero();
+	curTCP_T.matrix().block(0, 0, 3, 3) << 0, 0, 1, -1, 0, 0, 0, -1, 0;
+	curTCP_T.matrix()(0, 3) = 0;
+	curTCP_T.matrix()(1, 3) = -0.7830;
+	curTCP_T.matrix()(2, 3) = 0;
+
+	curTCP = kin.Transform2Vector6f(curTCP_T);
 	
 	tarTCP_T = curTCP_T;
 	tarTCP = curTCP;
@@ -37,6 +41,7 @@ Manipulator::Manipulator(RTX_ARM_DATA* _rtxArm)
 	plnJoint = curJoint;
 	errJoint.setZero();
 	velJoint.setZero();
+	tarTorque.setZero();
 
 	is_busy = false;
 	control_mode = Free_Mode;
@@ -49,7 +54,7 @@ Manipulator::Manipulator(RTX_ARM_DATA* _rtxArm)
 void Manipulator::encoderFB()
 {
 	int i;
-	for (i = 0; i < ARM_DOF-2; i++)
+	for (i = 0; i < ARM_DOF; i++)
 	{
 		joint[i]->updateJoint(cntOffset[i]);
 		cntJoint(i) = joint[i]->driver->_countEncoder;
@@ -60,7 +65,7 @@ void Manipulator::encoderFB()
 void Manipulator::torqueFB()
 {
 	int i;
-	for (i = 0; i < ARM_DOF - 2; i++)
+	for (i = 0; i < ARM_DOF; i++)
 	{
 		joint[i]->driver->readTorque(actTorque[i]);
 		actTorque[i] *= joint[i]->_gearRatio;
@@ -71,7 +76,7 @@ void Manipulator::torqueCMD()
 {
 	int i;
 	float _gearRatio;
-	for (i = 1; i < ARM_DOF-2; i++)
+	for (i = 1; i < ARM_DOF; i++)
 	{
 		_gearRatio = joint[i]->_gearRatio;
 		joint[i]->driver->cmdTorque(tarTorque(i) / _gearRatio);
@@ -81,22 +86,26 @@ void Manipulator::torqueCMD()
 void Manipulator::update()
 {
 	// current TCP Transoformation matrix
-	//curTCP_T = kin.ForwardKinematics(curJoint);
-	//curTCP = kin.Transform2Vector6f(curTCP_T);
+	curTCP_T = kin.FK_MaSaG(curJoint);
+	curTCP = kin.Transform2Vector6f(curTCP_T);
 	// Jacobian
-	//kin.updateJacobian(curJoint, Jacobian);
+	kin.updateJacobian(curJoint, Jacobian);
 	// TCP velocity
-	//velTCP = Jacobian*curJoint;
+	velTCP = Jacobian*curJoint;
 	// TCP error, TCP is defined as [x y z a b c]
-	//errTCP = tarTCP - curTCP;
+	errTCP = tarTCP - curTCP;
 
-	// k, k-1, k-2 update
-	q2 = q1;
-	q1 = curJoint;		
 	// joint error
 	errJoint = tarJoint - curJoint;
 	// joint angular velocity
 	velJoint = (curJoint - q1) / (float) SERVOLOOP_TIME;
+}
+
+void Manipulator::updatePastData()
+{
+	// k, k-1, k-2 update
+	q2 = q1;
+	q1 = curJoint;
 }
 
 Manipulator::~Manipulator()

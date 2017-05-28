@@ -24,6 +24,7 @@ typedef struct
 	F32_T		errTCP[6];
 	F32_T		plnTCP[6];
 	F32_T		velTCP[6];
+	F32_T		curROT[9];
 	// force/torque feedback
 	F32_T		FTSensor[6];
 	// ethercat device information

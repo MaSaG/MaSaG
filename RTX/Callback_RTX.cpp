@@ -24,7 +24,7 @@ void __RtCyclicCallback(void *UserDataPtr)
 		// control algorithm
 		robot->ControlLaw();
 		// output command
-		robot->commandOutput();
+		// robot->commandOutput();
 		// update shared memory
 		robot->updateSharedMemory();
 

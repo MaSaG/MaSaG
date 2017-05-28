@@ -438,7 +438,7 @@ void CSample2AxesControl_MFCDlg::OnBnClickedButtonStart()
 	if (ret != 0) { MessageBox("NEC_ResetEcMaster failed!"); NEC_StopDriver(); return; }
 
 	// Load ENI file
-	ret = NEC_LoadNetworkConfig(masterId, "D:\\Massage\\Test_10.xml", 1);
+	ret = NEC_LoadNetworkConfig(masterId, "D:\\Massage\\MaSaG_16_Devices.xml", 1);
 	if (ret != 0) { MessageBox("NEC_StartNetworkEx failed!"); NEC_StopDriver(); return; }
 
 	// Stop EtherCAT Driver
@@ -506,11 +506,11 @@ void CSample2AxesControl_MFCDlg::OnTimer(UINT_PTR nIDEvent)
 		case READY_CMD:
 			mCMDState.SetWindowText(_T("READY_CMD"));
 			break;
-		case TEST1_CMD:
-			mCMDState.SetWindowText(_T("TEST1_CMD"));
+		case TEACH_CMD:
+			mCMDState.SetWindowText(_T("TEACH_CMD"));
 			break;
-		case TEST2_CMD:
-			mCMDState.SetWindowText(_T("TEST2_CMD"));
+		case PLAY_CMD:
+			mCMDState.SetWindowText(_T("PLAY_CMD"));
 			break;
 		case TEST3_CMD:
 			mCMDState.SetWindowText(_T("TEST3_CMD"));
@@ -536,8 +536,8 @@ void CSample2AxesControl_MFCDlg::OnTimer(UINT_PTR nIDEvent)
 		case MIMMIC_CMD:
 			mCMDState.SetWindowText(_T("MIMMIC_CMD"));
 			break;
-		case TEST11_CMD:
-			mCMDState.SetWindowText(_T("TEST11_CMD"));
+		case ALIGN_CMD:
+			mCMDState.SetWindowText(_T("ALIGN_CMD"));
 			break;
 		case TEST12_CMD:
 			mCMDState.SetWindowText(_T("TEST12_CMD"));
@@ -578,8 +578,8 @@ void CSample2AxesControl_MFCDlg::OnTimer(UINT_PTR nIDEvent)
 		case FAULTRESET_CMD:
 			mCMDState.SetWindowText(_T("FAULTRESET_CMD"));
 			break;
-		case 25:
-			mCMDState.SetWindowText(_T("Under Constructing"));
+		case PRINT_CMD:
+			mCMDState.SetWindowText(_T("PRINT_CMD"));
 			break;
 		case 26:
 			mCMDState.SetWindowText(_T("Under Constructing"));
@@ -675,36 +675,36 @@ void CSample2AxesControl_MFCDlg::OnTimer(UINT_PTR nIDEvent)
 		t.Format(_T("%f"), p->_rtxRArm.curVel[6]);		mActVelR6.SetWindowText(t);
 		
 		// Actual Torque of Joint
-		t.Format(_T("%f"), p->_rtxLArm.actTorque[0]);		mCurTorL0.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxLArm.actTorque[1]);		mCurTorL1.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxLArm.actTorque[2]);		mCurTorL2.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxLArm.actTorque[3]);		mCurTorL3.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxLArm.actTorque[4]);		mCurTorL4.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxLArm.actTorque[5]);		mCurTorL5.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxLArm.actTorque[6]);		mCurTorL6.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.actTorque[0]);		mCurTorR0.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.actTorque[1]);		mCurTorR1.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.actTorque[2]);		mCurTorR2.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.actTorque[3]);		mCurTorR3.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.actTorque[4]);		mCurTorR4.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.actTorque[5]);		mCurTorR5.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.actTorque[6]);		mCurTorR6.SetWindowText(t);		
+		t.Format(_T("%f"), p->_rtxLArm.actTorque[0]);	mCurTorL0.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.actTorque[1]);	mCurTorL1.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.actTorque[2]);	mCurTorL2.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.actTorque[3]);	mCurTorL3.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.actTorque[4]);	mCurTorL4.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.actTorque[5]);	mCurTorL5.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.actTorque[6]);	mCurTorL6.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.actTorque[0]);	mCurTorR0.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.actTorque[1]);	mCurTorR1.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.actTorque[2]);	mCurTorR2.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.actTorque[3]);	mCurTorR3.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.actTorque[4]);	mCurTorR4.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.actTorque[5]);	mCurTorR5.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.actTorque[6]);	mCurTorR6.SetWindowText(t);		
 		
 		// Target Torque of Joint
-		t.Format(_T("%f"), p->_rtxLArm.tarTorque[0]);		mTarTorL0.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxLArm.tarTorque[1]);		mTarTorL1.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxLArm.tarTorque[2]);		mTarTorL2.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxLArm.tarTorque[3]);		mTarTorL3.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxLArm.tarTorque[4]);		mTarTorL4.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxLArm.tarTorque[5]);		mTarTorL5.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxLArm.tarTorque[6]);		mTarTorL6.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.tarTorque[0]);		mTarTorR0.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.tarTorque[1]);		mTarTorR1.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.tarTorque[2]);		mTarTorR2.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.tarTorque[3]);		mTarTorR3.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.tarTorque[4]);		mTarTorR4.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.tarTorque[5]);		mTarTorR5.SetWindowText(t);
-		t.Format(_T("%f"), p->_rtxRArm.tarTorque[6]);		mTarTorR6.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.tarTorque[0]);	mTarTorL0.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.tarTorque[1]);	mTarTorL1.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.tarTorque[2]);	mTarTorL2.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.tarTorque[3]);	mTarTorL3.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.tarTorque[4]);	mTarTorL4.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.tarTorque[5]);	mTarTorL5.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxLArm.tarTorque[6]);	mTarTorL6.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTorque[0]);	mTarTorR0.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTorque[1]);	mTarTorR1.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTorque[2]);	mTarTorR2.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTorque[3]);	mTarTorR3.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTorque[4]);	mTarTorR4.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTorque[5]);	mTarTorR5.SetWindowText(t);
+		t.Format(_T("%f"), p->_rtxRArm.tarTorque[6]);	mTarTorR6.SetWindowText(t);
 
 		// Force-Torque Sensor, Fx, Fy, Fz, Tx, Ty, Tz
 		t.Format(_T("%f"), p->_rtxLArm.FTSensor[0]);	mFxL.SetWindowText(t);
@@ -852,7 +852,7 @@ void CSample2AxesControl_MFCDlg::OnBnClickedButton5()
 	// TODO: 北兜矪瞶盽Α祘Α絏
 	USER_DAT *p;
 	p = (USER_DAT *)location;
-	p->_rtxCMD_ST.Command = ESCAPE_CMD;
+	p->_rtxCMD_ST.Command = PRINT_CMD;
 }
 
 
@@ -861,7 +861,7 @@ void CSample2AxesControl_MFCDlg::OnBnClickedButton6()
 	// TODO: 北兜矪瞶盽Α祘Α絏
 	USER_DAT *p;
 	p = (USER_DAT *)location;
-	p->_rtxCMD_ST.Command = TEST1_CMD;
+	p->_rtxCMD_ST.Command = TEACH_CMD;
 }
 
 
@@ -870,7 +870,7 @@ void CSample2AxesControl_MFCDlg::OnBnClickedButton7()
 	// TODO: 北兜矪瞶盽Α祘Α絏
 	USER_DAT *p;
 	p = (USER_DAT *)location;
-	p->_rtxCMD_ST.Command = TEST2_CMD;
+	p->_rtxCMD_ST.Command = PLAY_CMD;
 }
 
 
@@ -953,7 +953,7 @@ void CSample2AxesControl_MFCDlg::OnBnClickedButton16()
 	// TODO: 北兜矪瞶盽Α祘Α絏
 	USER_DAT *p;
 	p = (USER_DAT *)location;
-	p->_rtxCMD_ST.Command = TEST11_CMD;
+	p->_rtxCMD_ST.Command = ALIGN_CMD;
 }
 
 

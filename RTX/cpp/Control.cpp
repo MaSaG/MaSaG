@@ -69,13 +69,13 @@ void Control::initParams()
 	iGain[5] = 0.02;
 	iGain[6] = 0.02;
 
-	Dim[0] = 5;
-	Dim[1] = 200;
-	Dim[2] = 200;
-	Dim[3] = 5;
-	Dim[4] = 70;
-	Dim[5] = 5;
-	Dim[6] = 5;
+	Dim[0] = 0;
+	Dim[1] = 0;
+	Dim[2] = 0;
+	Dim[3] = 0;
+	Dim[4] = 0;
+	Dim[5] = 0;
+	Dim[6] = 0;
 
 	Kim[0] = 60;
 	Kim[1] = 160; //80

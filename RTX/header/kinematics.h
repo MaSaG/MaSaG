@@ -14,11 +14,12 @@ class kinematics
 {
 public:
 	Transform ForwardKinematics(Vectornf& q);
+	Transform FK_MaSaG(Vectornf& q);
 	void      updateJacobian(Vectornf& q, Matrix6nf& J);
 	void	  InversKinematics();  
 	Vector6f  Transform2Vector6f(Transform& t);
 private:
-	Transform transformDH(DH_Params dh);
-
+	Transform transformDH(DH_Params dh, float th);
+	void quaternion2euler(Eigen::Quaternionf& qu, Eigen::Vector3f& vec);
 };
 

@@ -7,7 +7,7 @@
 class Manipulator;
 
 enum {Planner_Idle, Cubic_TCP_Timer, Cubic_Joint_Timer, OTG_TCP_Timer, OTG_Joint_Timer,
-Mimmic, Mirror};
+Mimmic, Mirror, Teach_Mode, Play_Mode};
 
 class Motion
 {
@@ -25,6 +25,8 @@ public:
 	void FREE_MODE(Manipulator* arm);								// gravity compesation only
 	void MIMMIC(Manipulator* arm);
 	void MIRROR(Manipulator* arm);
+	void TEACH(Manipulator* arm);
+	void PLAY(Manipulator* arm);
 
 	void otgTCP_timer(Manipulator* arm);
 	void cubicTCP_timer(Manipulator* arm);
@@ -32,17 +34,22 @@ public:
 	void cubicJoint_timer(Manipulator* arm);
 	void Mimmic_timer(Manipulator* slave, Manipulator* master);
 	void Mirror_timer(Manipulator* slave, Manipulator* master);
+	void Teach_timer(Manipulator* arm);
+	void Play_timer(Manipulator* arm);
 
 	// parameters of cubic interpolation
 	CubicInt jointParam[ARM_DOF];		// joint
 	CubicInt tcpParam[6];				// tcp
-
+	int teach_counter;
+	Vectornf* trajTeach;
+	int* cnt_trajTeach;
+	
+private:
 	Vectornf amaxTCP;
 	Vectornf vmaxTCP;
 	Vectornf amaxJoint;
 	Vectornf vmaxJoint;
 
-private:
 	void tcpCubic(Manipulator* arm, Vector6f xf, float t);
 	void jointCubic(Manipulator* arm, Vectornf thf, float t);
 

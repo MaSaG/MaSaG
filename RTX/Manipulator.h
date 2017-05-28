@@ -14,7 +14,7 @@ class Manipulator
 public:
 	EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-		Joint*			joint[ARM_DOF];
+	Joint*			joint[ARM_DOF];
 	kinematics		kin;
 	dynamics		dyn;
 	Control			ctrl;
@@ -73,7 +73,7 @@ public:
 	void torqueFB();
 	void torqueCMD();
 	void update();
-
+	void updatePastData();
 
 	Manipulator(RTX_ARM_DATA* _rtxArm);
 	~Manipulator();

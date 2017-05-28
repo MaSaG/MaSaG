@@ -51,34 +51,32 @@ int execProgram(int& cmd)
 	Vectornf joint_pos;
 	switch (cmd)
 	{
-	case TEST1_CMD:
-		RtPrintf("test1 command\n");
-		robot->LArm->mtn->FREE_MODE(robot->LArm);
-		robot->RArm->mtn->FREE_MODE(robot->RArm);
-		cmd = READY_CMD;
+	case TEACH_CMD:
+		RtPrintf("teach command\n");
+		robot->RArm->mtn->TEACH(robot->RArm);
+		while (1)
+			if (cmd != TEACH_CMD)
+				break;
 		break;
 
-	case TEST2_CMD:
-		RtPrintf("test2 command\n");
-		robot->shoulderPOS(LEFT_ARM, OUTWARD, 5);
+	case PLAY_CMD:
+		RtPrintf("play command\n");
+		robot->RArm->mtn->PLAY(robot->RArm);
 		cmd = READY_CMD;
 		break;
 
 	case TEST3_CMD:
 		RtPrintf("test3 command\n");
-		robot->shoulderPOS(RIGHT_ARM, INWARD, 5);
 		cmd = READY_CMD;
 		break;
 
 	case TEST4_CMD:
 		RtPrintf("test4 command\n");
-		robot->shoulderPOS(RIGHT_ARM, OUTWARD, 5);
 		cmd = READY_CMD;
 		break;
 
 	case TEST5_CMD:
 		RtPrintf("test5 command\n");
-		robot->shoulderPOS(LEFT_ARM, INWARD, 5);
 		cmd = READY_CMD;
 		break;
 
@@ -111,8 +109,10 @@ int execProgram(int& cmd)
 		cmd = READY_CMD;
 		break;
 
-	case TEST11_CMD:
+	case ALIGN_CMD:
 		RtPrintf("test11 command\n");
+		joint_pos = robot->LArm->curJoint * 180.0f / M_PI;
+		robot->RArm->mtn->MOV_JOINT(robot->RArm, joint_pos, 5.0f);
 		cmd = READY_CMD;
 		break;
 
@@ -151,7 +151,7 @@ int execProgram(int& cmd)
 		
 	case SERVOON_CMD:
 		RtPrintf("Servo On command\n");
-		for (i = 0; i < ARM_DOF - 2; i++)
+		for (i = 0; i < ARM_DOF; i++)
 		{
 			robot->LArm->joint[i]->driver->servoOn();
 			robot->RArm->joint[i]->driver->servoOn();
@@ -160,7 +160,7 @@ int execProgram(int& cmd)
 		break;
 
 	case SERVOOFF_CMD:
-		for (i = 0; i < ARM_DOF - 2; i++)
+		for (i = 0; i < ARM_DOF; i++)
 		{
 			robot->LArm->joint[i]->driver->servoOff();
 			robot->RArm->joint[i]->driver->servoOff();
@@ -178,7 +178,7 @@ int execProgram(int& cmd)
 		joint_pos[3] = 0;
 		joint_pos[4] = 0;
 		joint_pos[5] = 0;
-		joint_pos[6] = 0;
+		joint_pos[6] = 90;
 		robot->RArm->mtn->MOV_JOINT(robot->RArm, joint_pos, 5.0f);
 		
 		cmd = READY_CMD;
@@ -187,6 +187,11 @@ int execProgram(int& cmd)
 	case FAULTRESET_CMD:
 		RtPrintf("clear fault command\n");
 		cmd = READY_CMD;
+		break;
+
+	case PRINT_CMD:
+		RtPrintf("print command\n");
+		cmd = PRINT_CMD;
 		break;
 
 	case ESCAPE_CMD:

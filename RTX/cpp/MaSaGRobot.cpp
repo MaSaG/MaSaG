@@ -7,6 +7,7 @@ MaSaGRobot::MaSaGRobot()
 	LArm = new Manipulator(&_RTX.pData->_rtxLArm);
 	RArm = new Manipulator(&_RTX.pData->_rtxRArm);
 	LArm->cntOffset[2] *= -1;								// special defined 
+	RArm->cntOffset[6] *= -1;								// special defined 
 	RArm->joint[0]->driver->_resEncoder = 4096;				// special defined since we use RE40 motors with different specifications
 	
 	int i;
@@ -23,7 +24,7 @@ int MaSaGRobot::initRobot()
 	int ret;
 	ret = _RTX.Init();
 	// appoint the addresses of slave devices
-	for (int i = 0; i < ARM_DOF - 2; i++)
+	for (int i = 0; i < ARM_DOF; i++)
 	{
 		LArm->joint[i]->driver->_nodeID = _RTX.pData->_rtxLArm.mAxis[i];
 		RArm->joint[i]->driver->_nodeID = _RTX.pData->_rtxRArm.mAxis[i];
@@ -43,6 +44,14 @@ void MaSaGRobot::updateFeedback()
 	LArm->curJoint[4] *= -1;
 	RArm->curJoint[2] *= -1;
 	RArm->curJoint[3] *= -1;
+	RArm->curJoint[6] *= -1;
+
+	LArm->actTorque[3] *= -1;
+	LArm->actTorque[4] *= -1;
+	RArm->actTorque[2] *= -1;
+	RArm->actTorque[3] *= -1;
+	RArm->actTorque[6] *= -1;
+
 }
 
 void MaSaGRobot::updateState()
@@ -56,7 +65,7 @@ void MaSaGRobot::updateSharedMemory()
 	int i;
 
 	// joint data 
-	for (i = 0; i < ARM_DOF - 2; i++)
+	for (i = 0; i < ARM_DOF; i++)
 	{
 		_RTX.pData->_rtxLArm.curPos[i] = LArm->curJoint(i)*RAD2DEG;
 		_RTX.pData->_rtxRArm.curPos[i] = RArm->curJoint(i)*RAD2DEG;
@@ -133,6 +142,12 @@ void MaSaGRobot::MotionTrajGen()
 		case Mirror:
 			LArm->mtn->Mirror_timer(LArm, RArm);
 			break;
+		case Teach_Mode:
+			LArm->mtn->Teach_timer(LArm);
+			break;
+		case Play_Mode:
+			LArm->mtn->Play_timer(LArm);
+			break;
 		}
 	}
 	
@@ -158,6 +173,12 @@ void MaSaGRobot::MotionTrajGen()
 			break;
 		case Mirror:
 			RArm->mtn->Mirror_timer(RArm, LArm);
+			break;
+		case Teach_Mode:
+			RArm->mtn->Teach_timer(RArm);
+			break;
+		case Play_Mode:
+			RArm->mtn->Play_timer(RArm);
 			break;
 		}
 	}
@@ -197,9 +218,12 @@ void MaSaGRobot::ControlLaw()
 
 void MaSaGRobot::commandOutput()
 {
-   	// LArm->torqueCMD();
+	LArm->tarTorque(3) *= -1;
+	LArm->tarTorque(4) *= -1;
+	LArm->torqueCMD();
 	RArm->tarTorque(2) *= -1;
 	RArm->tarTorque(3) *= -1;
+	RArm->tarTorque(6) *= -1;
 	RArm->torqueCMD();
 }
 

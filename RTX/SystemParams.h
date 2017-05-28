@@ -17,8 +17,8 @@ enum{ PP_Mode, PV_Mode, PT_Mode, PVT_Mode, CSP_Mode, CSV_Mode, CST_Mode};
 
 // CMD TABLE
 enum{ READY_CMD,			// 0       
-	  TEST1_CMD,			// 1
-	  TEST2_CMD,			// 2
+	  TEACH_CMD,			// 1
+	  PLAY_CMD,				// 2
 	  TEST3_CMD,			// 3
 	  TEST4_CMD,			// 4
 	  TEST5_CMD,			// 5
@@ -27,7 +27,7 @@ enum{ READY_CMD,			// 0
 	  FREE_MODE_CMD,		// 8
 	  MIRROR_CMD,			// 9
 	  MIMMIC_CMD,			// 10
-	  TEST11_CMD,			// 11
+	  ALIGN_CMD,			// 11
 	  TEST12_CMD,			// 12
 	  TEST13_CMD,			// 13
 	  TEST14_CMD,			// 14
@@ -38,6 +38,7 @@ enum{ READY_CMD,			// 0
 	  SERVOOFF_CMD,			// 22
 	  HOME_CMD,				// 23
 	  FAULTRESET_CMD,		// 24
+	  PRINT_CMD,			// 25
 	  ESCAPE_CMD = 27		// 27
 };	
 
